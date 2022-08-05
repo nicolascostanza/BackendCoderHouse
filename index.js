@@ -23,10 +23,10 @@ class Container {
   }
   async getById(idSelected) {
     try {
-			const allObjects = await this.getAll();
-			const filteredObject = allObjects.find((elem) => elem.id === idSelected);
-			const response = filteredObject === undefined ? null : filteredObject
-			return response
+      const allObjects = await this.getAll();
+      const filteredObject = allObjects.find((elem) => elem.id === idSelected);
+      const response = filteredObject === undefined ? null : filteredObject;
+      return response;
     } catch (error) {
       throw new Error(`An error occurred when filtered data: ${error}`);
     }
@@ -52,30 +52,29 @@ class Container {
     }
   }
   async deleteAll() {
-		try {
-			await fs.writeFile(this.path, '');
-		} catch (error) {
-			throw new Error(`Error while deleting.`);
-		}
-	}
+    try {
+      await fs.writeFile(this.path, "");
+    } catch (error) {
+      throw new Error(`Error while deleting.`);
+    }
+  }
 }
 
 (async function showResults(){
 	const productList = new Container("./products.txt");
 
-	productList.save({
+	await productList.save({
 		title: 'table',
 		price: '23 USD',
 		thumbnail: `www.ecommerce.com/table`
-	})
-	productList.save({
+	});
+	await productList.save({
 		title: 'chair',
 		price: '12 USD',
 		thumbnail: `www.ecommerce.com/chair`
-	})
-	productList.getById(7)
-	productList.getAll()
-	productList.deleteById(1)
-	productList.deleteAll();
+	});
+	await productList.getById(1);
+	await productList.getAll();
+	await productList.deleteById(1);
+	await productList.deleteAll();
 })();
-
