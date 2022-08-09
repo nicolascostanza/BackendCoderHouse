@@ -1,0 +1,35 @@
+CLASE 04:
+    * setTimeout(): tiene 2 parametros obligados, el primero es un callback(funcion pasada por parametro) y el segundo la cantidad de tiempo a esperar. Ademas seguidos a estos dos podes pasarle mas parametros q son los q va a recibir el callback por parametro. Este metodo ejecuta SOLO UNA VEZ la funcion que recibe en el primer parametro
+    * setInterval(): lo mismo q setTimeout pero ejecuta varias veces el CB, cada vez q pase el contador de timer pasado en el segundo lugar. Esto pasa hasta q se llama a clearInterval() o q se cierre la ventana
+    * El modulo File System (fs) solo esta presente en nodejs, no existe en el navegador
+    * const fs = require("fs")
+    * Tiene opciones para manejar archivos sincrona y asincronamente. Para usar tus estos metodos, le pasamos primero el path y segundo el encoding('utf-8')
+    * Siempre mejor usar rutas relativas con el ./
+    * readFileSync, es bloqueante, espera a terminarla, la q no tiene sync sigue con la ejecucion
+CLASE 05:
+    * npm init en consola para crear el package-json, donde instalar todas las librerias necesarias
+    * npm install solo te instala en dependencias generales, si le pones npm install --save--dev {nombre de la libreria} o npm install -D te la instala en dev dependencies
+    * cors libreria, nos permite aceptar request en el server desde cualquier punto del planeta, aunque sea raro
+    * en el package-json si tenemos antes de la version de la libreria un:
+        1) ~ significa q cuando cuando hagamos npm install solo se actualizara a las veriones con un cambio de patch example: '1.13.14', en este caso el 14
+        2) ^ significa q actualiza los patch y los cambios menores, example: 1.13.14 ---> actualizaria en el .13 y .14
+        3) * significa q actualiza todoo, los patchs, los minor releases o major releases
+        4) si no hay ninguna de las 3 de arriba, se acepta solo la version puesta
+    * para correr el archivo vamos a la parte de scripts en package-json y ponemos "start": "node index.js" ---> luego en consola se corre con node start
+VER CORS EN MOZILLA: https://developer.mozilla.org/es/docs/Web/HTTP/CORS
+CLASE 06:
+    * http: hiper text transfer protocol
+    * el modulo http:
+        es nativo
+        trabaja con el protocolo HTTP
+        para usarlo require('http')
+        para crear un servidor hacemos: http.createServer()
+        para linkear un puerto al codigo hhtp.server.listen(3000, ()=> {}), asi ? ver bien
+    * payload ---> informacion q se reciba o se envie en una API
+    * para hacer import .... from ... en vez de const ... = require('...') tenemos q ir al package.json y ponerle antes de los script "type": "module",
+    * la diferencia entre res.send() y res.end() es q res.end() da como finalizada la ejecucion, osea ya no hace mas nada. Ademas no pueden enviar todos los tipos de datos. Tambien existe el res.render() q manda un html a renderizar
+    * para iniciar con exprees en ves de html (ademas hay q instalarlo, pq no es un modulo nativo):
+        1) let express = require('express'); o import express from 'express'
+        2) let app = express()
+    * exiten dos tipos de API ---> tipo rest, q trabaja con endpoints, y graphQl que es un solo endpoint q devuelve una red con todo
+    * https://glitch.com/ sirve para deployar un servidor rudimentario
