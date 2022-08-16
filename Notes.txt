@@ -33,3 +33,36 @@ CLASE 06:
         2) let app = express()
     * exiten dos tipos de API ---> tipo rest, q trabaja con endpoints, y graphQl que es un solo endpoint q devuelve una red con todo
     * https://glitch.com/ sirve para deployar un servidor rudimentario
+CLASE 07:
+    * una api restful tiene q usar base de datos o archivos para q sea persistente pq se debe resetear todo al recargar
+    * status code:
+        1xx ---> informativos
+        2xx ---> exito
+        3xx ---> redireccion
+        4xx ---> cliente error
+        5xx ---> server error
+    * swagger es una pagina para documentar y hacer peticiones
+    * rest indica ademas los formatos de transferencia de archivos. Los mas comunes. XML y JSON
+    * API REST:
+        1) no tiene interfaz grafica
+        2) utiliza protocolo http
+        3) arquitectura cliente servidor: cada mensaje http contiene toda la info necesaria para hacer la peticion. Esto hace que cliente y servidor esten debilmente acoplados (importante)
+        4) cacheable: para almacenar informacion en una memoria y asi no tenes q consultar todo el tiempo. Esto hace q sea mas performante
+        5) operaciones comunes (operaciones crud)
+        6) interfaz uniforme
+        7) utilizacion de hipermedios
+    * una app de chatting no se hace con api rest. Se hace con otra api de comunicacion en tiempo real, q se hacen con otro protocolo. Usan socket io.
+    * capas en arquitectura de api restful: routing, capa de negocios, orm (capa de conexion con la base de datos)
+    * para pasar parametros por la url tenes params, y query params:
+        query params: empiezan en el momento en el q la url tiene '?' y siguen con "clave=valor", si se quieren agregar mas ponemos un "&"
+        params: se les pasa desp de un "/:params"
+    * lazy loading, sirve para la paginacion.
+    * para q el server con express pueda interpretar de forma automaticva los mensajes de tipo JSON en formato urlencoded al recibirlos, debemos agregarle lo siguiente al crearlo:
+        1) app.use(express.json())
+        2) app.use(express.urlencoded({extended: true}))
+    * para aplicar un middleware a nivel de aplicacion ponemos app.use()
+    
+
+
+
+
