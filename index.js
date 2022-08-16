@@ -35,11 +35,7 @@ personas.post('/', validatePerson, (req, res) =>{
     if(!req.body){
         res.send('nonexistent body')
     }
-    const { name, age } = req.body;
-    if (!name || !age){
-        res.status(400).send('data missing')
-    }
-    personList.push({name, age});
+    personList.push({...req.body});
     res.status(201).send('person created successfully')
 });
 
@@ -51,7 +47,7 @@ mascotas.post('/',validatePet, (req, res) =>{
     if(!req.body){
         res.send('nonexistent body')
     }
-    personList.push({name, race});
+    personList.push({...req.body});
     res.status(201).send('pet created successfully')
 })
 
