@@ -61,8 +61,20 @@ CLASE 07:
         1) app.use(express.json())
         2) app.use(express.urlencoded({extended: true}))
     * para aplicar un middleware a nivel de aplicacion ponemos app.use()
-    
-
-
+CLASE 08:
+    * para el manejo de rutas express tiene una clase llamada Router. Sirve para modularizar la api rest
+    * para usarlo ponemos --->
+    const express = require('express')
+    const { Router } = express
+    const app = express()
+    const router = Router()
+    * las clases siempre se llaman con mayusculas
+    * los middleware tienen el parametro next, donde lo usamos poniendo next() y hace q se ejecute siemrpe la siguiente funcion en la lista
+    *middlewares tipos:
+        ** a nivel de aplicacion
+        ** a nivel de router
+        ** manejo de errores
+        ** incorporados
+        ** de terceros
 
 
