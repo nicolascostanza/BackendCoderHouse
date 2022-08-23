@@ -1,3 +1,3 @@
-const products = [];
+const storeProducts = [];
 
-module.exports = { products };
+module.exports = storeProducts;

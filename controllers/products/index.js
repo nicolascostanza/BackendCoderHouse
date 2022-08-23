@@ -1,5 +1,5 @@
-const storeProducts = require("../../store/products");
-
+// const storeProducts = require("../../store/products");
+const storeProducts = [];
 const majorId = () => {
   const ids = storeProducts.map((product) => product.id);
   if (ids.length === 0) {
@@ -29,11 +29,11 @@ const getAllProducts = async (_req, res) => {
       .status(200)
       .json({ message: "all products", data: storeProducts, error: false });
   } catch (error) {
-    return res.status(500).json({
+    return res.json({
       message: "An error has ocurred",
       data: undefined,
       error: true,
-    });
+    }).status(500);
   }
 };
 
@@ -90,11 +90,11 @@ const createProduct = async (req, res) => {
         id: id,
       };
       storeProducts.push(product);
-      res.status(201).json({
+      res.json({
         message: "Product created !",
         data: product,
         error: false,
-      });
+      }).status(201);
     } else {
       res.status(400).json({
         message: "Invalid body",

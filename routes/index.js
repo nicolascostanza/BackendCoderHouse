@@ -5,4 +5,4 @@ const router = express.Router();
 
 router.use('/products', productsRoutes);
 
-export default router;
+module.exports = router;
