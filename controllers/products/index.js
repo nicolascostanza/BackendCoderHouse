@@ -9,7 +9,7 @@ const majorId = () => {
 };
 
 const getProductById = (id) => {
-  const productFiltered = storeProducts.find((product) => product.id === id);
+  const productFiltered = storeProducts.filter((product) => product.id == id);
   return productFiltered;
 };
 
@@ -24,16 +24,19 @@ const getAllProducts = async (_req, res) => {
       res
         .status(200)
         .json({ message: "product list empty", data: null, error: false });
+    } else {
+      res
+        .status(200)
+        .json({ message: "all products", data: storeProducts, error: false });
     }
-    res
-      .status(200)
-      .json({ message: "all products", data: storeProducts, error: false });
   } catch (error) {
-    return res.json({
-      message: "An error has ocurred",
-      data: undefined,
-      error: true,
-    }).status(500);
+    return res
+      .json({
+        message: "An error has ocurred",
+        data: undefined,
+        error: true,
+      })
+      .status(500);
   }
 };
 
@@ -46,7 +49,7 @@ const getById = async (req, res) => {
         error: true,
       });
     } else {
-      const { id } = req.params.id;
+      const id = req.params.id;
       parseInt(id);
       const maxId = majorId();
       if (id > maxId || id < 1) {
@@ -56,18 +59,20 @@ const getById = async (req, res) => {
           error: true,
         });
       } else {
-        const prod = getProductById(id);
-        prod
-          ? res.status(200).json({
-              message: "Product finded !!",
-              data: prod,
-              error: false,
-            })
-          : res.status(404).json({
-              message: "Product not found",
-              data: null,
-              error: true,
-            });
+        const prod = await getProductById(id);
+        if (prod.length !== 0) {
+          res.status(200).json({
+            message: "Product finded !!",
+            data: prod,
+            error: false,
+          });
+        } else {
+          res.status(404).json({
+            message: "Product not found",
+            data: null,
+            error: true,
+          });
+        }
       }
     }
   } catch (error) {
@@ -90,11 +95,13 @@ const createProduct = async (req, res) => {
         id: id,
       };
       storeProducts.push(product);
-      res.json({
-        message: "Product created !",
-        data: product,
-        error: false,
-      }).status(201);
+      res
+        .json({
+          message: "Product created !",
+          data: product,
+          error: false,
+        })
+        .status(201);
     } else {
       res.status(400).json({
         message: "Invalid body",
@@ -177,8 +184,10 @@ const deleteProduct = async (req, res) => {
       } else {
         const index = getIndexById(id);
         if (index !== -1) {
-          const productFiltered = getById(id);
-          storeProducts.splice(productFiltered, 1);
+          console.log("id", id);
+
+          const productFiltered = getProductById(id);
+          storeProducts.splice(index, 1);
           res.status(204).json({
             message: "product deleted !",
             data: productFiltered,
