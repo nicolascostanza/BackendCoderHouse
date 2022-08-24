@@ -76,5 +76,36 @@ CLASE 08:
         ** manejo de errores
         ** incorporados
         ** de terceros
+    * module exports para exportar en el back siempre
+    * cuando usas import es pq te queres traer todo sino en require para traerte solo una cosa
+
+CLASE 09:
+    * handlebars es un lenguaje de plantillas
+    * tienen un template, una data base y con eso genera un template
+
+clase 10:
+    * pug y ej son motores de templates como handlebars
+    * pug esta diseñado para hacer cosas mas pequeñas. Funciona como python mediante tabs e identaciones. Se le pasan las vistas y el motor para setearlo
+    * la extension del template es .pug
+    * en el endpoint ponemos res.render('la vista', {un objeto con los datos q necesita el template para pintarlo})
+    * seteo:
+        app.set('views', './views'); el segundo parametro es el path raiz donde estan los archivos de las vistas
+        app.set('view engine', 'pug');
+    * para las props en pug se hace div() y entre los parentesis le pones lo q le queres dar
+    * la etiqueta meter de html es una barra con min max y value para mostrrar
+    * ejs es un motor de plantillas ---> npm install ejs
+    *para seteo:
+        app.set('view engine', 'ejs')
+        el res.render busca dentro de la carpeta views. Osea q esto lo hace por defecto
+    * sintaxis:
+        <%= incrusta en plantilla el valor tal cual esta
+        <%- incrusta en la plantilla el valor renderizado como html
+        <% admite js
+    * poniendo <%- inclue('./partials/header.ejs')-%> incluimos los partials q son como las partes q podemos reutilizar en los templates
+
+
+
+
+
 
 
