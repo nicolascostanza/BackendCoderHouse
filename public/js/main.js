@@ -1,11 +1,11 @@
 const createProduct = async () => {
+    console.log('Hola Mundo');
     const title = document.getElementById('title').value
     const price = document.getElementById('price').value
     const thumbnail = document.getElementById('thumbnail').value
-    console.log(title, price, thumbnail);
     try {
         const data = { title, price, thumbnail}
-        const response = await fetch('http://localhost:8080/api/products', {
+        const response = await fetch('/api/products', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: { 'Content-Type': 'application/json'},

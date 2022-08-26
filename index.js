@@ -1,13 +1,14 @@
 const express = require("express");
 const routes = require("./routes/index");
+const path = require('path')
+const { engine } = require("express-handlebars");
 
 const app = express();
-// const handlebars = require("express-handlebars");
-const { engine } = require("express-handlebars");
-const PORT = 8080;
+const PORT = process.env.PORT || 8080
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')))
 app.engine(
   "hbs",
   engine({
@@ -22,7 +23,7 @@ app.set('view engine', '.hbs')
 
 
 app.get("/", (req, res) => {
-  res.render("main", {name: 'asddddd', scriptPath: './main.js'});
+  res.render("main", {name: 'asddddd', scriptPath: 'js/main.js'});
 });
 app.use("/api", routes);
 
