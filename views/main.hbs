@@ -3,34 +3,55 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <script src="./main.js"></script>
+    <title>Challenge Class 10</title>
   </head>
   <body>
+    <h1>aca renderizo el main.hbs</h1>
+    {{! <form>
+      <div>
+        <label class="form-label">Name's Product</label>
+        <input class="form-control" id="title" />
+      </div>
+      <div>
+        <label class="form-label">Price</label>
+        <input class="form-control" id="price" />
+      </div>
+      <div>
+        <label class="form-label">thumbnail</label>
+        <input class="form-control" id="thumbnail" />
+      </div>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        onclick="guardarProducto()"
+      >Guardar</button>
+    </form> }}
     <div class="container mt-5">
       <div class="row">
         <div class="col">
+          {{! <form id="data" action="http://localhost:8080/api/products" method="post"> }}
           <form id="data">
             <div class="mb-3">
-              <label class="form-label">Nombre del Producto</label>
-              <input class="form-control" id="nombre" />
+              <label class="form-label">Name's Product</label>
+              <input class="form-control" id="title" />
             </div>
             <div class="mb-3">
-              <label class="form-label">Precio en AR$</label>
-              <input class="form-control" id="precio" />
+              <label class="form-label">Price</label>
+              <input type="number" class="form-control" id="price" />
             </div>
             <div class="mb-3">
-              <label class="form-label">URL de la imagen</label>
-              <input class="form-control" id="urlImagen" />
+              <label class="form-label">thumbnail</label>
+              <input class="form-control" id="thumbnail" />
             </div>
             <button
-              type="submit"
+              type="button"
               class="btn btn-primary"
-              onclick="guardarProducto()"
+              onclick="createProduct()"
             >Guardar</button>
           </form>
         </div>
       </div>
     </div>
-    <script src="js/main.js"></script>
   </body>
 </html>

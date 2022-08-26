@@ -85,37 +85,38 @@ const getById = async (req, res) => {
 };
 
 const createProduct = async (req, res) => {
-  try {
-    if (req.body.title && req.body.price && req.body.thumbnail) {
-      const id = majorId() + 1;
-      const product = {
-        title: req.body.title,
-        price: req.body.price,
-        thumbnail: req.body.thumbnail,
-        id: id,
-      };
-      storeProducts.push(product);
-      res
-        .json({
-          message: "Product created !",
-          data: product,
-          error: false,
-        })
-        .status(201);
-    } else {
-      res.status(400).json({
-        message: "Invalid body",
-        data: null,
-        error: "La petición no es correcta",
-      });
-    }
-  } catch (error) {
-    return res.status(500).json({
-      message: error.message,
-      data: undefined,
-      error: true,
-    });
-  }
+  console.log(req);
+  // try {
+  //   if (req.body.title && req.body.price && req.body.thumbnail) {
+  //     const id = majorId() + 1;
+  //     const product = {
+  //       title: req.body.title,
+  //       price: req.body.price,
+  //       thumbnail: req.body.thumbnail,
+  //       id: id,
+  //     };
+  //     storeProducts.push(product);
+  //     res
+  //       .json({
+  //         message: "Product created !",
+  //         data: product,
+  //         error: false,
+  //       })
+  //       .status(201);
+  //   } else {
+  //     res.status(400).json({
+  //       message: "Invalid body",
+  //       data: null,
+  //       error: "La petición no es correcta",
+  //     });
+  //   }
+  // } catch (error) {
+  //   return res.status(500).json({
+  //     message: error.message,
+  //     data: undefined,
+  //     error: true,
+  //   });
+  // }
 };
 
 const putById = async (req, res) => {
