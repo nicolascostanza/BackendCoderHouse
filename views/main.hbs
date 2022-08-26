@@ -3,34 +3,13 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="./main.js"></script>
     <title>Challenge Class 10</title>
   </head>
   <body>
     <h1>aca renderizo el main.hbs</h1>
-    {{! <form>
-      <div>
-        <label class="form-label">Name's Product</label>
-        <input class="form-control" id="title" />
-      </div>
-      <div>
-        <label class="form-label">Price</label>
-        <input class="form-control" id="price" />
-      </div>
-      <div>
-        <label class="form-label">thumbnail</label>
-        <input class="form-control" id="thumbnail" />
-      </div>
-      <button
-        type="submit"
-        class="btn btn-primary"
-        onclick="guardarProducto()"
-      >Guardar</button>
-    </form> }}
     <div class="container mt-5">
       <div class="row">
         <div class="col">
-          {{! <form id="data" action="http://localhost:8080/api/products" method="post"> }}
           <form id="data">
             <div class="mb-3">
               <label class="form-label">Name's Product</label>
@@ -53,5 +32,6 @@
         </div>
       </div>
     </div>
+    <script src="{{script}}"></script>
   </body>
 </html>
