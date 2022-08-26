@@ -1,0 +1,40 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Challenge Class 10</title>
+  </head>
+  <body>
+    <h1>CREATE PRODUCT</h1>
+    <a href="http://localhost:8080/listProducts">
+      <button>View products</button>
+    </a>
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col">
+          <form id="data">
+            <div class="mb-3">
+              <label class="form-label">Name's Product</label>
+              <input class="form-control" id="title" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Price</label>
+              <input type="number" class="form-control" id="price" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Thumbnail</label>
+              <input class="form-control" id="thumbnail" />
+            </div>
+            <button
+              type="button"
+              class="btn btn-primary"
+              onclick="createProduct()"
+            >Guardar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src="{{scriptPath}}"></script>
+  </body>
+</html>

@@ -1,5 +1,4 @@
 const createProduct = async () => {
-    console.log('Hola Mundo');
     const title = document.getElementById('title').value
     const price = document.getElementById('price').value
     const thumbnail = document.getElementById('thumbnail').value

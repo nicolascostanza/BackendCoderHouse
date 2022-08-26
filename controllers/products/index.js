@@ -1,5 +1,11 @@
-// const storeProducts = require("../../store/products");
-const storeProducts = [];
+const storeProducts = [
+  {
+    title: "titulo",
+    price: 31,
+    thumbnail:
+      "https://www.comedera.com/wp-content/uploads/2022/04/Papas-rusticas-shutterstock_2022241940.jpg",
+  },
+];
 const majorId = () => {
   const ids = storeProducts.map((product) => product.id);
   if (ids.length === 0) {
@@ -18,25 +24,23 @@ const getIndexById = (id) => {
   return index;
 };
 
-const getAllProducts = async (_req, res) => {
+const getAllProducts = (_req, res) => {
   try {
     if (storeProducts.length === 0) {
-      res
+      return res
         .status(200)
         .json({ message: "product list empty", data: null, error: false });
     } else {
-      res
+      return res
         .status(200)
         .json({ message: "all products", data: storeProducts, error: false });
     }
   } catch (error) {
-    return res
-      .json({
-        message: "An error has ocurred",
-        data: undefined,
-        error: true,
-      })
-      .status(500);
+    return res.status(500).json({
+      message: "An error has ocurred",
+      data: null,
+      error: true,
+    });
   }
 };
 
@@ -85,9 +89,19 @@ const getById = async (req, res) => {
 };
 
 const createProduct = async (req, res) => {
-  console.log(req.body);
   try {
     if (req.body.title && req.body.price && req.body.thumbnail) {
+      let regexImg = new RegExp(/(https?:\/\/.*\.(?:png|jpg))/i);
+      const testImage = regexImg.test(req.body.thumbnail);
+      if (!testImage) {
+        return res
+          .json({
+            message: "thumbnail invalid !",
+            data: null,
+            error: true,
+          })
+          .status(400);
+      }
       const id = majorId() + 1;
       const product = {
         title: req.body.title,
@@ -218,4 +232,5 @@ module.exports = {
   createProduct,
   putById,
   deleteProduct,
+  storeProducts,
 };

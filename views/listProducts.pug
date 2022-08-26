@@ -1,0 +1,16 @@
+div(class='container mt-5')
+	div(class='row')
+		div(class='col')
+			a(href="http://localhost:8080/") Go Back
+			table(class='table')
+				thead(class='table-dark')
+					th Name's Product
+					th Price
+					th thumbnail
+				tbody
+					each product in data
+						tr
+							td= product.title
+							td= `$ ${product.price}`
+							td
+								img(src=product.thumbnail height='30px')
