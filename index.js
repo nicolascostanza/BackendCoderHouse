@@ -3,7 +3,7 @@ const routes = require("./routes/index");
 const { getAllProducts, storeProducts } = require("./controllers/products");
 const path = require("path");
 const { engine } = require("express-handlebars");
-// const pug = require('pug')
+const pug = require('pug')
 const ejs = require("ejs");
 
 const app = express();
@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
-// HANDLEBARS
+// HANDLEBARS desconmentar linea 17 a 26
 // app.engine(
 //   "hbs",
 //   engine({
@@ -25,10 +25,10 @@ app.use(express.static(path.join(__dirname, "public")));
 // );
 // app.set("view engine", ".hbs");
 
-// PUG
+// PUG desconmentar linea 29
 // app.set('view engine', 'pug')
 
-// EJS
+// EJS desconmentar linea 32
 app.set("view engine", ".ejs");
 
 app.set("views", "./views");

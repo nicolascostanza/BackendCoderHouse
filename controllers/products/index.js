@@ -1,9 +1,9 @@
 const storeProducts = [
   {
-    title: "titulo",
+    title: "ball",
     price: 31,
     thumbnail:
-      "https://www.comedera.com/wp-content/uploads/2022/04/Papas-rusticas-shutterstock_2022241940.jpg",
+      "https://assets.adidas.com/images/w_600,f_auto,q_auto/28530d07245942fc944dae680084fb30_9366/Pelota_Al_Rihla_Pro_Blanco_H57783_01_standard.jpg",
   },
 ];
 const majorId = () => {

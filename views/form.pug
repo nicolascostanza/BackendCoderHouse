@@ -10,16 +10,16 @@ html(lang='en')
         div(class='container mt-5')
             div(class='row')
                 div(class='col')
-                    a(href="http://localhost:8080/listProducts") View products
-                    form(id="data")
-                        div(class='mb-3')
-                            label(class='form-label') Name's Product
-                            input(class='form-control' id='title' )
-                        div(class='mb-3')
-                            labe(class='form-label') Price
-                            input(class='form-control' id='price' )
-                        div(class='mb-3')
-                            label(class='form-label') thumbnail
-                            input(class='form-control' id='thumbnail' )
-                        button(type='button' class='btn btn-primary' onclick='createProduct()') Guardar
+                    a(href="http://localhost:8080/listProducts" class="p-2 text-primary fs-2 fw-bolder text-decoration-none border border-primary rounded") View products
+                form( class="my-2 " id="data")
+                    div(class='mb-3')
+                        label(class='form-label') Name's Product
+                        input(class='form-control' id='title' )
+                    div(class='mb-3')
+                        labe(class='form-label') Price
+                        input(class='form-control' id='price' )
+                    div(class='mb-3')
+                        label(class='form-label') thumbnail
+                        input(class='form-control' id='thumbnail' )
+                    button(type='button' class='btn btn-primary' onclick='createProduct()') Guardar
         script(src="js/main.js")
