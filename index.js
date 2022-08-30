@@ -34,7 +34,6 @@ app.use(express.static(path.join(__dirname, "public")));
 app.set("views", "./views");
 
 app.use("/api", routes);
-console.log(storeProducts);
 
 app.get("/listProducts", async (_req, res) => {
   return res.render("listProducts", {
