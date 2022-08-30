@@ -1,9 +1,9 @@
 const express = require("express");
 const routes = require("./routes/index");
-const { getAllProducts, storeProducts } = require("./controllers/products");
+const { storeProducts } = require("./controllers/products");
 const path = require("path");
 const { engine } = require("express-handlebars");
-const pug = require('pug')
+const pug = require("pug");
 const ejs = require("ejs");
 
 const app = express();
@@ -29,11 +29,12 @@ app.use(express.static(path.join(__dirname, "public")));
 // app.set('view engine', 'pug')
 
 // EJS desconmentar linea 32
-app.set("view engine", ".ejs");
+// app.set("view engine", ".ejs");
 
 app.set("views", "./views");
 
 app.use("/api", routes);
+console.log(storeProducts);
 
 app.get("/listProducts", async (_req, res) => {
   return res.render("listProducts", {
