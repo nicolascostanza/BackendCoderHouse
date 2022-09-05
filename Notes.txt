@@ -102,8 +102,37 @@ clase 10:
         <%- incrusta en la plantilla el valor renderizado como html
         <% admite js
     * poniendo <%- inclue('./partials/header.ejs')-%> incluimos los partials q son como las partes q podemos reutilizar en los templates
-
-
+Clase 11:
+    * Websocket es un protocolo de red basado en TCP que establece cómo deben intercambiarse datos entre redes.
+    * Es un protocolo fiable y eficiente, utilizado por prácticamente todos los clientes.
+    * El protocolo TCP establece conexiones entre dos puntos finales de comunicación, llamados sockets.
+    * De esta manera, el intercambio de datos puede producirse en las dos direcciones
+    * websockets tiene conexiones bidireccionales, tenes acceso a los datos de forma rapida y permite una comunicacion directa y en tiempo real
+    * handshake ?? (es la conexion)
+    * Para iniciar el intercambio con Websocket el cliente envía una solicitud, al igual que en el clásico HTTP. Sin embargo, la conexión se establece mediante TCP y permanece abierta tras el handshake entre el cliente y el servidor.
+    * El nuevo esquema URL de Websocket para las páginas web mostradas se define con el prefijo ws en lugar de http. El prefijo que corresponde a una conexión segura es wss, de forma análoga a https.
+    * web sockets es un protocolo de comunicacion
+    * Socket.IO es una biblioteca de JavaScript para aplicaciones web en tiempo real. Permite la comunicación bidireccional en tiempo real entre servidores y clientes web.
+    * Tiene dos partes:
+        - Una biblioteca del lado del cliente que se ejecuta en el navegador.
+        - Una biblioteca del lado del servidor para Node.js.
+    * Ambos componentes tienen una API casi idéntica. Al igual que Node.js, está impulsado por eventos.
+    * caracteristicas de socket.io:
+        - Fiabilidad: Las conexiones se establecen incluso en presencia de:
+            proxies y balanceadores de carga.
+            firewall personal y software antivirus.
+        - Soporte de reconexión automática: A menos que se le indique lo contrario, un cliente desconectado intentará siempre volver a conectarse, hasta que el servidor vuelva a estar disponible.
+        - Detección de desconexión: Se implementa un mecanismo de heartbeat, lo que permite que tanto el servidor como el cliente sepan cuando el otro ya no responde.
+        - Soporte binario:  Se puede emitir cualquier estructura de datos serializable, que incluye:
+            - ArrayBuffer y Blob en el navegador
+            - ArrayBuffer y Buffer en Node.js
+    * Utilizando el método io.sockets.emit enviamos un mensaje global a todos los clientes conectados al canal de Websocket
+Clase 12:
+    * io.on('connection', function(socket) {
+        console.log('Un cliente se ha conectado');
+        });
+    * io.on('connection'. funcion) indica cuando alguien se conecta al servidor
+    * con io.sockets.emit, que notificará a todos los sockets conectados.
 
 
 
