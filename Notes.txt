@@ -133,7 +133,8 @@ Clase 12:
         });
     * io.on('connection'. funcion) indica cuando alguien se conecta al servidor
     * con io.sockets.emit, que notificará a todos los sockets conectados.
-
+    * emit el primer parametro es el nombr del evento
+    * socket esta basado en eventos, entre on y emit (on recibe, emit envia)
 
 
 
