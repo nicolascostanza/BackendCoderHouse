@@ -12,14 +12,19 @@ const io = new IOServer(httpServer);
 // los archivos estaticos se hacen en la carpeta public
 // para mostrar los archivos estaidos de public
 app.use(express.static("public"));
-// CADA CLIENTE ES UN SOCKET, PARA SABER CUANDOS SOCKETS HAY
-// aca verificamos cuantos hay conectados
-io.on("connection", (socket //socket es el usuario //
-) => {
-  socket.on('mensajeEnviado', (msg) => {
-    // io tiene una base de datos interna
-    io.sockets.emit('mensajesRecebidos', msg)
-  })
+// aca creamos la variable messages, para generar consistencia en memoria
+const messages = [];
+// aca hacemos el handshake con el cliente
+io.on("connection", (socket) => {
+  // PERSISTENCIA EN MEMORIA, AL CONECTAR TE PIDE TODO EL HISTORIAL DE MSG
+  socket.emit("new-chat-message", messages)
+  //capturo el evento recibido desde el front, evento llamado new-message
+  socket.on("new-message", (message) => {
+    console.log("newmessage", message);
+    messages.push(message);
+    // este io.sockets.emit  esta dentro de socket.on entonces reenvia a todos menos al q envio el mensaje
+    io.sockets.emit("new-chat-message", messages);
+  });
 });
 
 // handshake, se trata de decir q el servidor esta conectado
