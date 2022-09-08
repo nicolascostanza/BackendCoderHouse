@@ -135,6 +135,33 @@ Clase 12:
     * con io.sockets.emit, que notificará a todos los sockets conectados.
     * emit el primer parametro es el nombr del evento
     * socket esta basado en eventos, entre on y emit (on recibe, emit envia)
+Clase 13:
+    * Un transpilador es un tipo especial de compilador que traduce de un lenguaje fuente a otro fuente. Se diferencia de los compiladores tradicionales ya que estos últimos reciben como entrada archivos conteniendo código fuente y generan código máquina del más bajo nivel.
+    * La diferencia radica en la relación entre los lenguajes origen y destino de la traducción. El transpilador traduce código entre dos lenguajes que están al mismo nivel de abstracción, mientras que el compilador lo hace entre lenguajes de diferente nivel de abstracción
+    * babel es un transpilador
+    * Babel es un transpilador que nos permite transformar nuestro código JS de última generación (o con funcionalidades extras) a JS que cualquier navegador o versión de Node.js entienda.
+    * Babel funciona mediante plugins con los cuales le indicamos cuál es la transformación que vamos a efectuar.
+    * El código escrito en origen.js pertenece a ES6 ya que usa const y las nuevas arrow functions y queremos que Babel lo convierta a JS5. Para ello, definimos un script en el package.json:
+        ----> "build": "babel ./origen.js -o ./destino.js -w" La opción -w nos permite transpilar automáticamente ante los cambios en origen.js
+    * Los archivos de TypeScript se compilan en JavaScript mediante TSC: el compilador de TypeScript. TSC se puede instalar como paquete TypeScript a través de npm
+    * Conversion mediante transpilador de typescript a js:
+        1- Creamos un proyecto de Node.js con npm init -y
+        2- Instalamos el TSC mediante npm: npm i typescript
+        3- Creamos un archivo index.ts con contenido en Typescript
+        4- Transpilamos con el comando: node_modules/.bin/tsc ./index.ts -w
+        5- Verificamos que en nuestra carpeta de proyecto se encuentre index.js
+    * A partir de ES6 de Node.js admite definir archivos y proyectos como módulos. A diferencia de los archivos y proyectos comunes en JavaScript (“commonJs”), los módulos permiten ser importados en forma asincrónica en lugar de sincrónica, lo cual libera el hilo principal y mejora la performance de los programas (entre otras ventajas). Cuando se trata de proyectos, este cambio se puede realizar fácilmente desde el archivo package.json, agregando el siguiente par clave-valor: "type": "module".
+    * ARCHIVO TSCONFIG ---> TypeScript utiliza un archivo llamado tsconfig.json para configurar las opciones del compilador para un proyecto. Para crear el archivo tsconfig.json ejecutamos el siguiente comando:  ./node_modules/.bin/tsc --init. Este comando generará un archivo tsconfig.json bien redactado.
+    * Algunas de las claves más importantes de tsconfig.json
+        - module: Especifica el método de generación de código del módulo.
+        - target: Especifica el nivel de lenguaje de salida.
+        - rootDir: Especifica el directorio raíz de los archivos de entrada. Se usa sólo para controlar la estructura del - directorio de salida con outDir.
+        - outDir: Esta es la ubicación para los archivos .js tras la transpilación.
+    * Mediante los scripts creados en package.json ponemos en acción los mecanismos de transpilación manual y automática junto con la puesta en marcha del proyecto.
+        - "build": "tsc" -> transpilación manual.
+        - "watch": "tsc -w"-> transpilación automática.
+        - "start": "node ./dist/index.js" -> ejecución de código transpilado.
+    * cuando usamos import en vez de require estamos usando asincronismo, eso hace q no bloquee el hilo de ejecucion. Con el require lo importa sincronicamente
 
 
 
