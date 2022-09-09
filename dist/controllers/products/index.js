@@ -93,9 +93,9 @@ const addProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         })
             .status(401);
     }
-    const { timestamp, name, description, code, image, price, stock } = req.body;
+    const { name, description, code, image, price, stock } = req.body;
     try {
-        if (timestamp && name && description && code && image && price && stock) {
+        if (name && description && code && image && price && stock) {
             const regexImg = new RegExp(/(https?:\/\/.*\.(?:png|jpg))/i);
             const testImage = regexImg.test(image);
             const validateNewProduct = storeProducts.filter((product) => product.name === name || product.code === parseInt(code));
@@ -120,7 +120,7 @@ const addProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             else {
                 const newProdToAdd = {
                     id: storeProducts.length + 1,
-                    timestamp,
+                    timestamp: Date.now().toString(),
                     name,
                     description,
                     code,
@@ -141,7 +141,7 @@ const addProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         else {
             return res
                 .json({
-                message: "Please send all fields: timestamp, name, description, code, image, price and stock",
+                message: "Please send all fields: name, description, code, image, price and stock",
                 data: null,
                 error: false,
             })
@@ -169,7 +169,7 @@ const updateProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         })
             .status(401);
     }
-    const { timestamp, name, description, code, image, price, stock } = req.body;
+    const { name, description, code, image, price, stock } = req.body;
     const idParam = parseInt(req.params.id);
     try {
         if (isNaN(idParam)) {
@@ -211,7 +211,7 @@ const updateProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
                 }
                 const UpdateProduct = {
                     id: idParam,
-                    timestamp,
+                    timestamp: Date.now().toString(),
                     name,
                     description,
                     code,
@@ -296,6 +296,7 @@ const deleteProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 export default {
+    storeProducts,
     getProducts,
     addProduct,
     updateProduct,

@@ -5,6 +5,6 @@ import cartRoutes from "./cartRoutes.js";
 const router = express.Router();
 
 router.use("/products", productsRoutes);
-router.use("/cart", cartRoutes);
+router.use("/carts", cartRoutes);
 
 export default router;

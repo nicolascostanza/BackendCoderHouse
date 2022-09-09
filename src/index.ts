@@ -7,6 +7,10 @@ app.use(express.json());
 
 app.use("/api", routes);
 
+app.get("*", function (_req, res) {
+  res.status(404).json({ message: "page not found" }).send("Page not found");
+});
+
 app.listen(PORT, () => {
   console.log(`APP listen on port: ${PORT}`);
 });
