@@ -1,3 +1,5 @@
+import fs from 'fs';
+
 interface product {
   id: number;
   timestamp: string;
