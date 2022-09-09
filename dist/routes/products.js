@@ -1,10 +1,9 @@
 import express from "express";
-import productControllers from "../controllers/products/index";
+import productControllers from "../controllers/products/index.js";
 const routerProducts = express.Router();
 routerProducts
-    .get("/", productControllers.getAllProducts)
-    .get("/:id", productControllers.getById)
-    .post("/", productControllers.createProduct)
-    .put("/:id", productControllers.putById)
+    .get("/:id?", productControllers.getProducts)
+    .post("/", productControllers.addProduct)
+    .put("/:id", productControllers.updateProduct)
     .delete("/:id", productControllers.deleteProduct);
 export default routerProducts;
