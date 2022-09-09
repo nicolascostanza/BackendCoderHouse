@@ -7,7 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const storeProducts = [
+let storeProducts = [
     {
         id: 1,
         timestamp: "10/10/10",
@@ -40,6 +40,7 @@ const storeProducts = [
     },
 ];
 const getProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("length", storeProducts.length);
     const idParam = parseInt(req.params.id);
     try {
         if (!isNaN(idParam)) {
@@ -55,7 +56,7 @@ const getProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             }
             else {
                 res
-                    .status(200)
+                    .status(404)
                     .json({ message: "Product not found", data: null, error: false });
             }
         }
@@ -106,7 +107,7 @@ const addProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                     data: null,
                     error: false,
                 })
-                    .status(200);
+                    .status(400);
             }
             else {
                 const newProdToAdd = {
@@ -119,7 +120,6 @@ const addProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                     price,
                     stock,
                 };
-                console.log("newProdToAdd", newProdToAdd);
                 storeProducts.push(newProdToAdd);
                 return res
                     .json({
@@ -127,7 +127,7 @@ const addProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                     data: null,
                     error: false,
                 })
-                    .status(200);
+                    .status(201);
             }
         }
         else {
@@ -150,195 +150,124 @@ const addProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             .status(500);
     }
 });
-const updateProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () { });
-const deleteProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () { });
-// const getAllProducts = async (_req, res) => {
-//   try {
-//     if (storeProducts.length === 0) {
-//       res
-//         .status(200)
-//         .json({ message: "product list empty", data: null, error: false });
-//     } else {
-//       res
-//         .status(200)
-//         .json({ message: "all products", data: storeProducts, error: false });
-//     }
-//   } catch (error) {
-//     return res
-//       .json({
-//         message: "An error has ocurred",
-//         data: undefined,
-//         error: true,
-//       })
-//       .status(500);
-//   }
-// };
-// const getById = async (req, res) => {
-//   try {
-//     if (isNaN(parseInt(req.params.id))) {
-//       res.status(404).json({
-//         message: "Send a number",
-//         data: null,
-//         error: true,
-//       });
-//     } else {
-//       const id = req.params.id;
-//       parseInt(id);
-//       const maxId = majorId();
-//       if (id > maxId || id < 1) {
-//         res.status(404).json({
-//           message: "Id not found",
-//           data: null,
-//           error: true,
-//         });
-//       } else {
-//         const prod = await getProductById(id);
-//         if (prod.length !== 0) {
-//           res.status(200).json({
-//             message: "Product finded !!",
-//             data: prod,
-//             error: false,
-//           });
-//         } else {
-//           res.status(404).json({
-//             message: "Product not found",
-//             data: null,
-//             error: true,
-//           });
-//         }
-//       }
-//     }
-//   } catch (error) {
-//     return res.status(500).json({
-//       message: "An error has ocurred",
-//       data: undefined,
-//       error: true,
-//     });
-//   }
-// };
-// const createProduct = async (req, res) => {
-//   try {
-//     if (req.body.title && req.body.price && req.body.thumbnail) {
-//       const id = majorId() + 1;
-//       const product = {
-//         title: req.body.title,
-//         price: req.body.price,
-//         thumbnail: req.body.thumbnail,
-//         id: id,
-//       };
-//       storeProducts.push(product);
-//       res
-//         .json({
-//           message: "Product created !",
-//           data: product,
-//           error: false,
-//         })
-//         .status(201);
-//     } else {
-//       res.status(400).json({
-//         message: "Invalid body",
-//         data: null,
-//         error: "La petición no es correcta",
-//       });
-//     }
-//   } catch (error) {
-//     return res.status(500).json({
-//       message: error.message,
-//       data: undefined,
-//       error: true,
-//     });
-//   }
-// };
-// const putById = async (req, res) => {
-//   try {
-//     if (isNaN(parseInt(req.params.id))) {
-//       res.status(404).json({
-//         message: "Send a number",
-//         data: null,
-//         error: true,
-//       });
-//     }
-//     const index = getIndexById(parseInt(req.params.id));
-//     if (index === -1) {
-//       res.status(404).json({
-//         message: "id not found",
-//         data: null,
-//         error: true,
-//       });
-//     }
-//     if (!(req.body.title || req.body.price || req.body.thumbnail)) {
-//       res.status(400).json({
-//         message: "invalid body",
-//         data: null,
-//         error: true,
-//       });
-//     }
-//     const oldProduct = storeProducts[index];
-//     const newProduct = {
-//       title: req.body.title,
-//       price: req.body.price,
-//       thumbnail: req.body.thumbnail,
-//       id: oldProduct.id,
-//     };
-//     storeProducts[index] = newProduct;
-//     res.status(200).json({
-//       message: "Product edited !",
-//       data: newProduct,
-//       error: false,
-//     });
-//   } catch (err) {
-//     return res.status(500).json({
-//       message: "There was an error",
-//       data: undefined,
-//       error: true,
-//     });
-//   }
-// };
-// const deleteProduct = async (req, res) => {
-//   try {
-//     if (isNaN(parseInt(req.params.id))) {
-//       res.status(404).json({
-//         message: "Send a number",
-//         data: null,
-//         error: true,
-//       });
-//     } else {
-//       const id = parseInt(req.params.id);
-//       const maxId = majorId();
-//       if (id > maxId || id < 1) {
-//         res.status(404).json({
-//           message: "Id not found",
-//           data: null,
-//           error: true,
-//         });
-//       } else {
-//         const index = getIndexById(id);
-//         if (index !== -1) {
-//           console.log("id", id);
-//           const productFiltered = getProductById(id);
-//           storeProducts.splice(index, 1);
-//           res.status(204).json({
-//             message: "product deleted !",
-//             data: productFiltered,
-//             error: false,
-//           });
-//         } else {
-//           res.status(404).json({
-//             message: "Product not found",
-//             data: null,
-//             error: true,
-//           });
-//         }
-//       }
-//     }
-//   } catch (err) {
-//     return res.status(500).json({
-//       message: "There was an error",
-//       data: undefined,
-//       error: true,
-//     });
-//   }
-// };
+const updateProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { timestamp, name, description, code, image, price, stock } = req.body;
+    const idParam = parseInt(req.params.id);
+    try {
+        if (isNaN(idParam)) {
+            return res
+                .json({
+                message: "Please enter a valid id",
+                data: null,
+                error: true,
+            })
+                .status(400);
+        }
+        else {
+            const findProduct = storeProducts.filter((product) => {
+                return product.id === idParam;
+            });
+            if (findProduct.length) {
+                const regexImg = new RegExp(/(https?:\/\/.*\.(?:png|jpg))/i);
+                const testImage = regexImg.test(image);
+                // pre mapeo de la lista de productos sin el seleccionado
+                const productListWithOutId = storeProducts.filter((prod) => prod.id !== idParam);
+                const validateNewProduct = productListWithOutId.filter((product) => product.name === name || product.code === parseInt(code));
+                console.log("validateNewProduct", validateNewProduct.length);
+                if (!testImage) {
+                    return res
+                        .json({
+                        message: "image invalid, please enter a valid url !",
+                        data: null,
+                        error: true,
+                    })
+                        .status(400);
+                }
+                if (validateNewProduct.length) {
+                    return res
+                        .json({
+                        message: "Code or name in use !",
+                        data: null,
+                        error: false,
+                    })
+                        .status(400);
+                }
+                const UpdateProduct = {
+                    id: idParam,
+                    timestamp,
+                    name,
+                    description,
+                    code,
+                    image,
+                    price,
+                    stock,
+                };
+                storeProducts[idParam - 1] = Object.assign({}, UpdateProduct);
+                return res
+                    .json({
+                    message: "Product Updated !",
+                    data: storeProducts,
+                    error: false,
+                })
+                    .status(200);
+            }
+            else {
+                return res
+                    .json({
+                    message: "Id not found",
+                    data: null,
+                    error: true,
+                })
+                    .status(400);
+            }
+        }
+    }
+    catch (error) {
+        return res
+            .json({
+            message: "An unexpected error has ocurred",
+            data: null,
+            error: true,
+        })
+            .status(500);
+    }
+});
+const deleteProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const idParam = parseInt(req.params.id);
+    if (isNaN(idParam)) {
+        return res
+            .json({
+            message: "Please enter a valid id",
+            data: null,
+            error: true,
+        })
+            .status(400);
+    }
+    else {
+        const productToDelete = storeProducts.filter((product) => {
+            return product.id === idParam;
+        });
+        if (productToDelete.length) {
+            storeProducts.splice(idParam - 1, 1);
+            return res
+                .json({
+                message: "Product Deleted",
+                data: storeProducts,
+                error: false,
+            })
+                .status(204);
+        }
+        else {
+            return res
+                .json({
+                message: "Id not found",
+                data: null,
+                error: true,
+            })
+                .status(404);
+        }
+    }
+});
 export default {
     getProducts,
     addProduct,
