@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs from "fs/promises";
 
 interface product {
   id: number;
@@ -11,46 +11,19 @@ interface product {
   stock: number;
 }
 
-let storeProducts: Array<product> = [
-  {
-    id: 1,
-    timestamp: "10/10/10",
-    name: "mesa",
-    description: "mesa para comer",
-    code: 10,
-    image: "www.asdjahdas.com/foto",
-    price: 3,
-    stock: 7,
-  },
-  {
-    id: 2,
-    timestamp: "10/10/10",
-    name: "silla",
-    description: "silla para comer",
-    code: 20,
-    image: "www.asdjahdas.com/foto",
-    price: 100,
-    stock: 7,
-  },
-  {
-    id: 3,
-    timestamp: "10/10/10",
-    name: "mouse",
-    description: "mnouseee",
-    code: 30,
-    image: "www.asdjahdas.com/foto",
-    price: 100,
-    stock: 7,
-  },
-];
+let storeProducts: Array<product> = [];
 
 const getProducts = async (req, res) => {
-  const idParam = parseInt(req.params.id);
+  const idParam: number = parseInt(req.params.id);
   try {
+    const allProductsDB: string = await fs.readFile("dist/store.txt", "utf-8");
+    const allProductsToJson: Array<product> = JSON.parse(allProductsDB);
     if (!isNaN(idParam)) {
-      const findProduct = storeProducts.filter((product) => {
-        return product.id === idParam;
-      });
+      const findProduct: Array<product> = allProductsToJson.filter(
+        (product) => {
+          return product.id === idParam;
+        }
+      );
       if (findProduct.length !== 0) {
         res.status(200).send({
           message: "Product found !",
@@ -63,16 +36,16 @@ const getProducts = async (req, res) => {
           .json({ message: "Product not found", data: null, error: false });
       }
     } else {
-      if (storeProducts.length > 0) {
+      if (allProductsToJson.length > 0) {
         return res.status(200).json({
           message: "all products",
-          data: storeProducts,
+          data: allProductsToJson,
           error: false,
         });
       } else {
         return res
           .status(200)
-          .json({ message: "product list empty", data: null, error: false });
+          .json({ message: "product list empty", data: [], error: false });
       }
     }
   } catch (error) {
@@ -85,7 +58,7 @@ const getProducts = async (req, res) => {
 };
 
 const addProduct = async (req, res) => {
-  const isAdmin = req.body.isAdmin;
+  const isAdmin: boolean = req.body.isAdmin;
   if (!isAdmin) {
     return res
       .json({
@@ -98,9 +71,14 @@ const addProduct = async (req, res) => {
   const { name, description, code, image, price, stock } = req.body;
   try {
     if (name && description && code && image && price && stock) {
-      const regexImg = new RegExp(/(https?:\/\/.*\.(?:png|jpg))/i);
-      const testImage = regexImg.test(image);
-      const validateNewProduct = storeProducts.filter(
+      const regexImg: RegExp = new RegExp(/(https?:\/\/.*\.(?:png|jpg))/i);
+      const testImage: boolean = regexImg.test(image);
+      const allProductsDB: string = await fs.readFile(
+        "dist/store.txt",
+        "utf-8"
+      );
+      const allProductsToJson: Array<product> = JSON.parse(allProductsDB);
+      const validateNewProduct: Array<product> = storeProducts.filter(
         (product) => product.name === name || product.code === parseInt(code)
       );
       if (!testImage) {
@@ -131,14 +109,29 @@ const addProduct = async (req, res) => {
           price,
           stock,
         };
-        storeProducts.push(newProdToAdd);
-        return res
-          .json({
-            message: "Product added !",
-            data: null,
-            error: false,
+        allProductsToJson.push(newProdToAdd);
+        fs.writeFile(
+          "dist/store.txt",
+          JSON.stringify(allProductsToJson, null, 2)
+        )
+          .then(() => {
+            return res
+              .json({
+                message: "Product added !",
+                data: null,
+                error: false,
+              })
+              .status(201);
           })
-          .status(201);
+          .catch(() => {
+            return res
+              .json({
+                message: "Error to save product in store !",
+                data: null,
+                error: true,
+              })
+              .status(400);
+          });
       }
     } else {
       return res
@@ -161,7 +154,7 @@ const addProduct = async (req, res) => {
   }
 };
 const updateProduct = async (req, res) => {
-  const isAdmin = req.body.isAdmin;
+  const isAdmin: boolean = req.body.isAdmin;
   if (!isAdmin) {
     return res
       .json({
@@ -171,8 +164,8 @@ const updateProduct = async (req, res) => {
       })
       .status(401);
   }
-  const { name, description, code, image, price, stock } = req.body;
-  const idParam = parseInt(req.params.id);
+  const { name, description, code, image, price, stock }: product = req.body;
+  const idParam: number = parseInt(req.params.id);
   try {
     if (isNaN(idParam)) {
       return res
@@ -183,18 +176,25 @@ const updateProduct = async (req, res) => {
         })
         .status(400);
     } else {
-      const findProduct = storeProducts.filter((product) => {
-        return product.id === idParam;
-      });
+      const allProductsDB: string = await fs.readFile(
+        "dist/store.txt",
+        "utf-8"
+      );
+      const allProductsToJson: Array<product> = JSON.parse(allProductsDB);
+      const findProduct: Array<product> = allProductsToJson.filter(
+        (product) => {
+          return product.id === idParam;
+        }
+      );
       if (findProduct.length) {
-        const regexImg = new RegExp(/(https?:\/\/.*\.(?:png|jpg))/i);
-        const testImage = regexImg.test(image);
+        const regexImg: RegExp = new RegExp(/(https?:\/\/.*\.(?:png|jpg))/i);
+        const testImage: boolean = regexImg.test(image);
         // pre mapeo de la lista de productos sin el seleccionado
-        const productListWithOutId = storeProducts.filter(
+        const productListWithOutId: Array<product> = allProductsToJson.filter(
           (prod) => prod.id !== idParam
         );
-        const validateNewProduct = productListWithOutId.filter(
-          (product) => product.name === name || product.code === parseInt(code)
+        const validateNewProduct: Array<product> = productListWithOutId.filter(
+          (product) => product.name === name || product.code === parseInt(code as any)
         );
         if (!testImage) {
           return res
@@ -224,16 +224,31 @@ const updateProduct = async (req, res) => {
           price,
           stock,
         };
-        storeProducts[idParam - 1] = {
+        allProductsToJson[idParam - 1] = {
           ...UpdateProduct,
         };
-        return res
-          .json({
-            message: "Product Updated !",
-            data: storeProducts,
-            error: false,
+        fs.writeFile(
+          "dist/store.txt",
+          JSON.stringify(allProductsToJson, null, 2)
+        )
+          .then(() => {
+            return res
+              .json({
+                message: "Product Updated !",
+                data: allProductsToJson,
+                error: false,
+              })
+              .status(200);
           })
-          .status(200);
+          .catch(() => {
+            return res
+              .json({
+                message: "Error to update product in store !",
+                data: null,
+                error: true,
+              })
+              .status(400);
+          });
       } else {
         return res
           .json({
@@ -254,8 +269,9 @@ const updateProduct = async (req, res) => {
       .status(500);
   }
 };
+
 const deleteProduct = async (req, res) => {
-  const isAdmin = req.body.isAdmin;
+  const isAdmin: boolean = req.body.isAdmin;
   if (!isAdmin) {
     return res
       .json({
@@ -265,7 +281,7 @@ const deleteProduct = async (req, res) => {
       })
       .status(401);
   }
-  const idParam = parseInt(req.params.id);
+  const idParam: number = parseInt(req.params.id);
   if (isNaN(idParam)) {
     return res
       .json({
@@ -275,18 +291,33 @@ const deleteProduct = async (req, res) => {
       })
       .status(400);
   } else {
-    const productToDelete = storeProducts.filter((product) => {
-      return product.id === idParam;
-    });
-    if (productToDelete.length) {
-      storeProducts.splice(idParam - 1, 1);
-      return res
-        .json({
-          message: "Product Deleted",
-          data: storeProducts,
-          error: false,
+    const allProductsDB: string = await fs.readFile("dist/store.txt", "utf-8");
+    const allProductsToJson: Array<product> = JSON.parse(allProductsDB);
+    const newProductList: Array<product> = allProductsToJson.filter(
+      (product) => {
+        return product.id !== idParam;
+      }
+    );
+    if (newProductList.length) {
+      fs.writeFile("dist/store.txt", JSON.stringify(newProductList, null, 2))
+        .then(() => {
+          return res
+            .json({
+              message: "Product deleted !",
+              data: newProductList,
+              error: false,
+            })
+            .status(204);
         })
-        .status(204);
+        .catch(() => {
+          return res
+            .json({
+              message: "Error to delete a product in store !",
+              data: null,
+              error: true,
+            })
+            .status(400);
+        });
     } else {
       return res
         .json({
@@ -300,7 +331,6 @@ const deleteProduct = async (req, res) => {
 };
 
 export default {
-  storeProducts,
   getProducts,
   addProduct,
   updateProduct,

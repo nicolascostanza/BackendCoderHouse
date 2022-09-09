@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "timestamp": "1662744488650",
+    "name": "ardsadasadsbol",
+    "description": "mnouseee",
+    "code": 420,
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Eiche_bei_Graditz.jpg/1200px-Eiche_bei_Graditz.jpg",
+    "price": 100,
+    "stock": 7
+  },
+]
