@@ -40,7 +40,6 @@ let storeProducts = [
     },
 ];
 const getProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("length", storeProducts.length);
     const idParam = parseInt(req.params.id);
     try {
         if (!isNaN(idParam)) {
@@ -84,13 +83,22 @@ const getProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 const addProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const isAdmin = req.body.isAdmin;
+    if (!isAdmin) {
+        return res
+            .json({
+            message: "You are not authorized to make this request",
+            data: null,
+            error: true,
+        })
+            .status(401);
+    }
     const { timestamp, name, description, code, image, price, stock } = req.body;
     try {
         if (timestamp && name && description && code && image && price && stock) {
             const regexImg = new RegExp(/(https?:\/\/.*\.(?:png|jpg))/i);
             const testImage = regexImg.test(image);
             const validateNewProduct = storeProducts.filter((product) => product.name === name || product.code === parseInt(code));
-            console.log("validateNewProduct", validateNewProduct.length);
             if (!testImage) {
                 return res
                     .json({
@@ -151,6 +159,16 @@ const addProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 const updateProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const isAdmin = req.body.isAdmin;
+    if (!isAdmin) {
+        return res
+            .json({
+            message: "You are not authorized to make this request",
+            data: null,
+            error: true,
+        })
+            .status(401);
+    }
     const { timestamp, name, description, code, image, price, stock } = req.body;
     const idParam = parseInt(req.params.id);
     try {
@@ -173,7 +191,6 @@ const updateProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
                 // pre mapeo de la lista de productos sin el seleccionado
                 const productListWithOutId = storeProducts.filter((prod) => prod.id !== idParam);
                 const validateNewProduct = productListWithOutId.filter((product) => product.name === name || product.code === parseInt(code));
-                console.log("validateNewProduct", validateNewProduct.length);
                 if (!testImage) {
                     return res
                         .json({
@@ -233,6 +250,16 @@ const updateProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 const deleteProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const isAdmin = req.body.isAdmin;
+    if (!isAdmin) {
+        return res
+            .json({
+            message: "You are not authorized to make this request",
+            data: null,
+            error: true,
+        })
+            .status(401);
+    }
     const idParam = parseInt(req.params.id);
     if (isNaN(idParam)) {
         return res
