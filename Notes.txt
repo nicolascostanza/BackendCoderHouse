@@ -223,6 +223,7 @@ Clase 14:
         - module: sirve para aclararle a Webpack cómo debe procesar los loaders que queramos usar para un proyecto.
     * Los loaders son transformaciones que se aplican en el código fuente de nuestras aplicaciones. Existen decenas de ellos, para usar cantidad de tecnologías y transformar código de preprocesadores, código HTML, Javascript, etc. Son como una especie de tareas que Webpack se encargará de realizar sobre nuestro código, cada una especializada en algo en concreto. ts-loader es un TypeScript loader para webpack. Mediante las rules definidas dentro de la entrada module, podemos establecer a qué archivos se aplican los loaders que sean necesarios.
 Clase 15:
+    * importante: poner ; en los comandos q ingreso por la consola
     * La sigla que se conoce como SQL corresponde a la expresión inglesa Structured Query   Language (en español “Lenguaje de Consulta Estructurado”)
     * SQL es un tipo de lenguaje vinculado con la gestión de bases de datos de carácter relacional, que permite la especificación de distintas clases de operaciones entre éstas.
     * Gracias a la utilización del álgebra y de cálculos relacionales, el SQL brinda la posibilidad de realizar consultas con el objetivo de recuperar información de las bases de datos de manera sencilla
@@ -272,6 +273,41 @@ Clase 15:
     * ELIMINAR UNA TABLA
         * drop table nombre_tabla;
     * es importante poner ; al final de cada sentencia
+CLASE 16:
+    * Knex.js es un generador de consultas SQL con "baterías incluidas" para Postgres, MSSQL, MySQL, MariaDB, SQLite3, Oracle y Amazon Redshift, diseñado para ser flexible, portátil y fácil de usar.
+    *Cuenta con una interfaz basada en callbacks y en promesas.
+    *Knex se puede utilizar como un generador de consultas SQL en Node.JS.
+    *Se puede instalar desde npm con el comando npm i knex
+    *Además debemos instalar las dependencias de las base de datos con la cual vamos a trabajar: npm i -> pg para PostgreSQL y Amazon Redshift, mysql para MySQL y MariaDB, sqlite3 para SQLite3 ó mssql para MSSQL.
+    * inicialización del proyecto e instalación de dependencias:
+        - Creamos un proyecto Node.js con npm init -y
+        - Instalamos la dependencias Knex y mysql con npm i knex mysql (mysql es el plugin necesario para trabajar con MariaDB)
+        - Levantamos el motor de base de datos MariaDB con XAMPP.
+        - Creamos los archivos necesarios para probar los comandos SQL necesarios en acciones CRUD.
+    * un ORM abstrae la base de datos para q el programador haga consultas en el lenguaje que esta programando sin necesitar usar el lenguaje SQL. Mapea la data q viene de la base de datos para que la podamos usar facilmente en codigo
+    * El mejor ORM para typescript o javascript es: TypeORM
+    * para instalar knex hacemos:
+        1) npm install knex --save y npm install y la base de datos q usemos (mysql, pg, etc)(ver documentacion oficial knex)
+        2) para conectarlo hacemos:
+            const knex = require('knex')({
+                client: 'mysql',
+                connection: {
+                    host: '127.0.0.1',
+                    port: 3306,  <puerto por defecto para las bases de datos>
+                    user: 'mi_usuario_database',  <nombre de usuarios q tenemos en la base de datos creada>
+                    password: 'mi_contraseña_database',  <password q tenemos en la base de datos creada>
+                    database: 'my_app_test'  <nombre q le dimos al a base de datos>
+                }
+            })
+            OBS: podemos ver la docu oficial de knex q lo explica
+    * los seeds nos permiten meterle info a la base de datos en su primera carga, tambien sirve como mock para probar
+    * tambien poseen migraciones. Que te permite volver atras si hiciste algo mal(rollback)
+    * los orm tienen mecanismo para proteger las bases de datos
+    * knex cheetsheets ---> https://devhints.io/knex
+    * PARA DARLE UN NOMBRE A LA BASE DE DATOS PONEMOS:
+        create database NOMBREQLEPONEMOS;
+        use NOMBREQLEPUSIMOS;
+    * SQLITE es una libreria en lenguaje C, es un motor de bases de datos como mysql. Es multiplataforma, su principal virtud. Es de dominio publico y lo tienen casi todos los dispositivos ya instalados
 
 
 
