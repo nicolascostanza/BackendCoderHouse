@@ -162,7 +162,116 @@ Clase 13:
         - "watch": "tsc -w"-> transpilación automática.
         - "start": "node ./dist/index.js" -> ejecución de código transpilado.
     * cuando usamos import en vez de require estamos usando asincronismo, eso hace q no bloquee el hilo de ejecucion. Con el require lo importa sincronicamente
+Clase 14:
+    * Webpack es un empaquetador de módulos (module bundler), que genera un archivo único con todos los módulos que necesita la aplicación para funcionar. Permite encapsular todos los archivos JavaScript en un único archivo, por ejemplo bundle.js
+    * npm install webpack webpack-cli para instalar webpack
+    * "scripts": {
+            "build": "webpack ./rutaDelArchivoQueQueresEmpaquetar"
+        }, ----> esto genera una carpeta dist con el archivo main.js empaquetado
+    * En caso de no especificar, buscará un archivo index.js dentro de una carpeta src por defecto, e incluirá en forma recursiva todas las dependencias de ese archivo y de sus dependencias.
+    * El modo modo desarrollo o producción define si el código generado tendrá formato de lectura amigable y comentarios, o si estará minificado, respectivamente. Ejemplo scripts dentro del package.json:
+        - "build": "webpack ./a1.js ./a2.js ./a3.js --mode=production",
+        - "dev": "webpack ./a1.js ./a2.js ./a3.js -w --mode=development",
+    * creacion del proyecto de nodejs con typescript y webpack. Pasos:
+        - Generamos la carpeta de proyecto
+        - Inicializamos un proyecto de node con npm init -y
+        - Dentro del proyecto creamos un carpeta src con un archivo index.ts.
+        - Instalamos las dependencias de desarrollo:
+        - npm i -D typescript ts-loader webpack webpack-cli webpack-node-externals
+        - Instalamos las dependencias del proyecto:
+        - npm i express @types/express
+        - Creamos el archivo tsconfig.json (configuración del transpilador typescript) con el comando ./node_modules/.bin/tsc --init
+        - Modificamos tsconfig.json dejando la clave "noImplicitAny" en false (deshabilita la generación de errores en expresiones y declaraciones con cualquier tipo implícito)
+        - Creamos el archivo webpack.config.js y le agregamos el siguiente contenido:
+            const path = require('path');
+            const nodeExternals = require('webpack-node-externals');
 
+            module.exports = {
+            mode: 'production',
+            entry: './src/index.ts',
+            target: "node",
+            externals: [nodeExternals()],
+
+            output: {
+                path: path.resolve(__dirname, 'dist'),
+                filename: 'main.js',
+            },
+            resolve: {
+                extensions: ['.ts', '.js'],
+            },
+            module: {
+                rules: [
+                    {
+                        test: /\.tsx?/,
+                        use: 'ts-loader',
+                        exclude: /node_modules/
+                    }
+                ]
+            }
+        }
+        * en el package.json agregamos lo siguiente:
+            -  "main": "dist/main.js",
+            - "scripts": {
+                "build": "webpack",
+            },
+    * Propiedades que podemos configurar:
+        - mode: para el modo de trabajo (development ó production)
+        - entry: para definir el punto de entrada de nuestro código.
+        - externals: permite el correcto funcionamiento con algunas librerías externas (en este caso, express)
+        - output: para definir el punto de salida.
+        - resolve: configura cómo se resuelven los módulos
+        - module: sirve para aclararle a Webpack cómo debe procesar los loaders que queramos usar para un proyecto.
+    * Los loaders son transformaciones que se aplican en el código fuente de nuestras aplicaciones. Existen decenas de ellos, para usar cantidad de tecnologías y transformar código de preprocesadores, código HTML, Javascript, etc. Son como una especie de tareas que Webpack se encargará de realizar sobre nuestro código, cada una especializada en algo en concreto. ts-loader es un TypeScript loader para webpack. Mediante las rules definidas dentro de la entrada module, podemos establecer a qué archivos se aplican los loaders que sean necesarios.
+Clase 15:
+    * La sigla que se conoce como SQL corresponde a la expresión inglesa Structured Query   Language (en español “Lenguaje de Consulta Estructurado”)
+    * SQL es un tipo de lenguaje vinculado con la gestión de bases de datos de carácter relacional, que permite la especificación de distintas clases de operaciones entre éstas.
+    * Gracias a la utilización del álgebra y de cálculos relacionales, el SQL brinda la posibilidad de realizar consultas con el objetivo de recuperar información de las bases de datos de manera sencilla
+    * MySQL es un sistema de gestión de bases de datos relacional desarrollado bajo licencia dual: Licencia pública general/Licencia comercial por Oracle Corporation y está considerada como la base de datos de código abierto más popular del mundo.
+    * MariaDB es un sistema de gestión de bases de datos derivado de MySQL con licencia GPL (General Public License).
+    * MySQL y MariaDB son compatibles entre sí a nivel funcional.
+    * SQL es un LENGUAJE
+    * MySQL es un gestor de base de datos relacionales
+    * XAMPP es un paquete de software libre, que consiste principalmente en el sistema de gestión de bases de datos MySQL
+    * PASOS PARA USARLO:
+        1) abrimos XAMPP y le damos a start en el de MySQL
+        2) apretamos el boton de shell y en consola ponemos myqsl -u root
+        3) ahi se deberia poder usar ya y sino buscamos https://onecompiler.com/mysql
+    * CREACION DE TABLA:
+        CREATE TABLE NombreQueQueremosPonerle (
+            id INTEGER PRIMARY KEY AUTO_INCREMENT,
+            nombre TEXT(255) NOT NULL,
+            apellido TEXT(255) NOT NULL,
+            email TEXT(255) NOT NULL,
+            edad numeric NOT NULL
+        )
+        PRIMARY KEY significa q es unica y q con ese campo vamos a hacer las relacionales
+        AUTO_INCREMENT quiere decir q sola se va incrementando
+        NOT NULL para q no sea nullo
+        INTEGER se le dice de q tipo de dato es, en este caso entero
+        varchar(255) significa q es de tipo string y q tiene maximo 255 caracteres
+    * CREATE, INSERTAR DATOS A LA TABLA:
+        INSERT INTO <nombre de la tabla>(<nombre de las props q queremos insertar, ej: 'nombre'>) VALUES(<valores de los campos q pusimos antes, se asignar en orden de nombramiento, ej: 'nicolas'>)
+    * UPDATEAR
+        UPDATE nombreTabla
+        SET colum1 = value1, colum2 = value2, ...
+        WHERE condition
+
+        SET es para decir q valores voy cambiando, par clave valor. Aca si poenmos ej: edad = 20. Directamente se los cambia a todos
+        WHERE sirve para condicionar. Es opcional
+    * LEER
+        SELECT * from nombreDeLaTabla
+    * DELETE
+        ** por lo general cuenta con una condicion (WHERE)
+        delete from nombretabla ----> elimina todo de la tabla
+    * COMANDOS
+        * show tables ----> te muestra las tablas
+        * describe table <nombredelatabla> ----> te muestra algunos datos de la tabla
+        * select * from nombreDeLaTabla ---> te muestra toda la tabla con los datos
+    * MODIFICAR LA ESTRUCTURA DE LA TABLA. OSEA LA CABECERA:
+        * ALTER TABLE nombre_table ADD column_name datatype(ejjemplo TEXT);
+    * ELIMINAR UNA TABLA
+        * drop table nombre_tabla;
+    * es importante poner ; al final de cada sentencia
 
 
 
