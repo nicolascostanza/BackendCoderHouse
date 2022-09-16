@@ -14,7 +14,10 @@ interface product {
 const getProducts = async (req, res) => {
   const idParam: number = parseInt(req.params.id);
   try {
-    const allProductsDB: string = await fs.readFile("dist/store/products.txt", "utf-8");
+    const allProductsDB: string = await fs.readFile(
+      "dist/store/products.txt",
+      "utf-8"
+    );
     const allProductsToJson: Array<product> = JSON.parse(allProductsDB);
     if (!isNaN(idParam)) {
       const findProduct: Array<product> = allProductsToJson.filter(
@@ -34,17 +37,11 @@ const getProducts = async (req, res) => {
           .json({ message: "Product not found", data: null, error: false });
       }
     } else {
-      if (allProductsToJson.length > 0) {
-        return res.status(200).json({
-          message: "all products",
-          data: allProductsToJson,
-          error: false,
-        });
-      } else {
-        return res
-          .status(200)
-          .json({ message: "product list empty", data: [], error: false });
-      }
+      return res.status(404).json({
+        message: "enter a valid Id",
+        data: null,
+        error: true,
+      });
     }
   } catch (error) {
     return res.status(500).json({
@@ -61,7 +58,7 @@ const addProduct = async (req, res) => {
     return res
       .json({
         error: -1,
-        description: 'Ruta: /api/productos. Metodo: POST no autorizada',
+        description: "Ruta: /api/productos. Metodo: POST no autorizada",
       })
       .status(401);
   }
@@ -156,7 +153,7 @@ const updateProduct = async (req, res) => {
     return res
       .json({
         error: -1,
-        description: 'Ruta: /api/productos. Metodo: PUT no autorizada',
+        description: "Ruta: /api/productos. Metodo: PUT no autorizada",
       })
       .status(401);
   }
@@ -189,7 +186,8 @@ const updateProduct = async (req, res) => {
           (prod) => prod.id !== idParam
         );
         const validateNewProduct: Array<product> = productListWithOutId.filter(
-          (product) => product.name === name || product.code === parseInt(code as any)
+          (product) =>
+            product.name === name || product.code === parseInt(code as any)
         );
         if (!testImage) {
           return res
@@ -271,7 +269,7 @@ const deleteProduct = async (req, res) => {
     return res
       .json({
         error: -1,
-        description: 'Ruta: /api/productos. Metodo: DELETE no autorizada',
+        description: "Ruta: /api/productos. Metodo: DELETE no autorizada",
       })
       .status(401);
   }
@@ -285,7 +283,10 @@ const deleteProduct = async (req, res) => {
       })
       .status(400);
   } else {
-    const allProductsDB: string = await fs.readFile("dist/store/products.txt", "utf-8");
+    const allProductsDB: string = await fs.readFile(
+      "dist/store/products.txt",
+      "utf-8"
+    );
     const allProductsToJson: Array<product> = JSON.parse(allProductsDB);
     const newProductList: Array<product> = allProductsToJson.filter(
       (product) => {
@@ -293,7 +294,10 @@ const deleteProduct = async (req, res) => {
       }
     );
     if (newProductList.length !== allProductsToJson.length) {
-      fs.writeFile("dist/store/products.txt", JSON.stringify(newProductList, null, 2))
+      fs.writeFile(
+        "dist/store/products.txt",
+        JSON.stringify(newProductList, null, 2)
+      )
         .then(() => {
           return res
             .json({
