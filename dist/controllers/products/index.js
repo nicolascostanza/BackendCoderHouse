@@ -8,11 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import fs from "fs/promises";
-let storeProducts = [];
 const getProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const idParam = parseInt(req.params.id);
     try {
-        const allProductsDB = yield fs.readFile("dist/store.txt", "utf-8");
+        const allProductsDB = yield fs.readFile("dist/store/products.txt", "utf-8");
         const allProductsToJson = JSON.parse(allProductsDB);
         if (!isNaN(idParam)) {
             const findProduct = allProductsToJson.filter((product) => {
@@ -70,9 +69,9 @@ const addProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         if (name && description && code && image && price && stock) {
             const regexImg = new RegExp(/(https?:\/\/.*\.(?:png|jpg))/i);
             const testImage = regexImg.test(image);
-            const allProductsDB = yield fs.readFile("dist/store.txt", "utf-8");
+            const allProductsDB = yield fs.readFile("dist/store/products.txt", "utf-8");
             const allProductsToJson = JSON.parse(allProductsDB);
-            const validateNewProduct = storeProducts.filter((product) => product.name === name || product.code === parseInt(code));
+            const validateNewProduct = allProductsToJson.filter((product) => product.name === name || product.code === parseInt(code));
             if (!testImage) {
                 return res
                     .json({
@@ -93,7 +92,7 @@ const addProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             }
             else {
                 const newProdToAdd = {
-                    id: storeProducts.length + 1,
+                    id: allProductsToJson.length + 1,
                     timestamp: Date.now().toString(),
                     name,
                     description,
@@ -103,12 +102,12 @@ const addProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                     stock,
                 };
                 allProductsToJson.push(newProdToAdd);
-                fs.writeFile("dist/store.txt", JSON.stringify(allProductsToJson, null, 2))
+                fs.writeFile("dist/store/products.txt", JSON.stringify(allProductsToJson, null, 2))
                     .then(() => {
                     return res
                         .json({
                         message: "Product added !",
-                        data: null,
+                        data: allProductsToJson,
                         error: false,
                     })
                         .status(201);
@@ -168,7 +167,7 @@ const updateProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
                 .status(400);
         }
         else {
-            const allProductsDB = yield fs.readFile("dist/store.txt", "utf-8");
+            const allProductsDB = yield fs.readFile("dist/store/products.txt", "utf-8");
             const allProductsToJson = JSON.parse(allProductsDB);
             const findProduct = allProductsToJson.filter((product) => {
                 return product.id === idParam;
@@ -176,7 +175,6 @@ const updateProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             if (findProduct.length) {
                 const regexImg = new RegExp(/(https?:\/\/.*\.(?:png|jpg))/i);
                 const testImage = regexImg.test(image);
-                // pre mapeo de la lista de productos sin el seleccionado
                 const productListWithOutId = allProductsToJson.filter((prod) => prod.id !== idParam);
                 const validateNewProduct = productListWithOutId.filter((product) => product.name === name || product.code === parseInt(code));
                 if (!testImage) {
@@ -208,7 +206,7 @@ const updateProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
                     stock,
                 };
                 allProductsToJson[idParam - 1] = Object.assign({}, UpdateProduct);
-                fs.writeFile("dist/store.txt", JSON.stringify(allProductsToJson, null, 2))
+                fs.writeFile("dist/store/products.txt", JSON.stringify(allProductsToJson, null, 2))
                     .then(() => {
                     return res
                         .json({
@@ -271,13 +269,13 @@ const deleteProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             .status(400);
     }
     else {
-        const allProductsDB = yield fs.readFile("dist/store.txt", "utf-8");
+        const allProductsDB = yield fs.readFile("dist/store/products.txt", "utf-8");
         const allProductsToJson = JSON.parse(allProductsDB);
         const newProductList = allProductsToJson.filter((product) => {
             return product.id !== idParam;
         });
-        if (newProductList.length) {
-            fs.writeFile("dist/store.txt", JSON.stringify(newProductList, null, 2))
+        if (newProductList.length !== allProductsToJson.length) {
+            fs.writeFile("dist/store/products.txt", JSON.stringify(newProductList, null, 2))
                 .then(() => {
                 return res
                     .json({

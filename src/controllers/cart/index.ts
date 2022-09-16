@@ -1,5 +1,4 @@
-import * as productsControllers from "../products/index.js";
-
+import fs from "fs/promises";
 interface product {
   id: number;
   timestamp: string;
@@ -16,84 +15,42 @@ interface cart {
   products: Array<product>;
 }
 
-const allCarts: Array<cart> = [
-  {
-    id: 1,
-    timestamp: "10/10/10",
-    products: [
-      {
-        id: 1,
-        timestamp: "10/10/10",
-        name: "PRIMER CARRITO",
-        description: "PRIOMERITO PRODUCTO",
-        code: 10,
-        image: "www.asdjahdas.com/foto",
-        price: 3,
-        stock: 7,
-      },
-      {
-        id: 2,
-        timestamp: "11/10/10",
-        name: "silla",
-        description: "sillona para comer",
-        code: 1230,
-        image: "www.asdjahdas1231.com/foto",
-        price: 13,
-        stock: 72,
-      },
-    ],
-  },
-  {
-    id: 2,
-    timestamp: "13/10/10",
-    products: [
-      {
-        id: 1,
-        timestamp: "10/10/10",
-        name: "SEG CARRITO",
-        description: "mesa para comer",
-        code: 10,
-        image: "www.asdjahdas.com/foto",
-        price: 3,
-        stock: 7,
-      },
-      {
-        id: 3,
-        timestamp: "11/10/10",
-        name: "asdsadsad",
-        description: "sillasdsadsaddaomer",
-        code: 113,
-        image: "www.asdjahdas1231.com/foto",
-        price: 133,
-        stock: 7422,
-      },
-    ],
-  },
-];
-
 const createCart = async (_req, res) => {
-  const newCart: cart = {
-    id: allCarts.length + 1,
-    timestamp: Date.now().toString(),
-    products: [],
-  };
-  allCarts.push(newCart);
-  return res.status(201).json({
-    message: "New cart created",
-    data: newCart.id,
-    error: false,
-  });
+  try {
+    const allCartsToBD: string = await fs.readFile("dist/store/carts.txt", "utf-8");
+    const allCartsInJson: Array<cart> = JSON.parse(allCartsToBD);
+    const newCart: cart = {
+      id: allCartsInJson.length + 1,
+      timestamp: Date.now().toString(),
+      products: [],
+    };
+    allCartsInJson.push(newCart);
+    fs.writeFile("dist/store/carts.txt", JSON.stringify(allCartsInJson, null, 2));
+    return res.status(201).json({
+      message: `New cart created id: ${newCart.id}`,
+      data: newCart.id,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: `An error has ocurred: ${error}`,
+      data: undefined,
+      error: true,
+    });
+  }
 };
 const deleteCart = async (req, res) => {
-  const idParam = parseInt(req.params.id);
+  const idParam: number = parseInt(req.params.id);
   try {
     if (!isNaN(idParam)) {
-      const findCart = allCarts.filter((cart) => {
-        return cart.id === idParam;
+      const allCartsToBD: string = await fs.readFile("dist/store/carts.txt", "utf-8");
+      const allCartsInJson: Array<cart> = JSON.parse(allCartsToBD);
+      const findCart: Array<cart> = allCartsInJson.filter((cart) => {
+        return cart.id !== idParam;
       });
-      if (findCart.length !== 0) {
-        // BORRARLO CON FILESYSTEM
-        return res.status(204).send({
+      if (findCart.length !== allCartsInJson.length) {
+        fs.writeFile("dist/store/carts.txt", JSON.stringify(findCart, null, 2));
+        return res.status(200).send({
           message: "Cart deleted",
           data: findCart,
           error: false,
@@ -112,17 +69,19 @@ const deleteCart = async (req, res) => {
     }
   } catch (error) {
     return res.status(500).send({
-      message: "An unexpected error has ocurred",
+      message: `An unexpected error has ocurred: ${error}`,
       data: null,
       error: true,
     });
   }
 };
 const getProductsInCart = async (req, res) => {
-  const idParam = parseInt(req.params.id);
+  const idParam: number = parseInt(req.params.id);
   try {
     if (!isNaN(idParam)) {
-      const findCart = allCarts.filter((cart) => {
+      const allCartsToBD: string = await fs.readFile("dist/store/carts.txt", "utf-8");
+      const allCartsInJson: Array<cart> = JSON.parse(allCartsToBD);
+      const findCart: Array<cart> = allCartsInJson.filter((cart) => {
         return cart.id === idParam;
       });
       if (findCart.length !== 0) {
@@ -152,8 +111,8 @@ const getProductsInCart = async (req, res) => {
   }
 };
 const addProductToCart = async (req, res) => {
-  const idProd = parseInt(req.params.idProd)
-  const idCart = parseInt(req.params.id)
+  const idProd: number = parseInt(req.params.idProd);
+  const idCart: number = parseInt(req.params.id);
   try {
     if (isNaN(idCart) || isNaN(idProd)) {
       return res.status(400).send({
@@ -162,22 +121,27 @@ const addProductToCart = async (req, res) => {
         error: true,
       });
     } else {
-      // valido los ids q exitan
-      const existenceIdCart = allCarts.filter((cart) => {
+      const allCartsToBD: string = await fs.readFile("dist/store/carts.txt", "utf-8");
+      const allCartsInJson: Array<cart> = JSON.parse(allCartsToBD);
+      const allProductsDB: string = await fs.readFile(
+        "dist/store.txt",
+        "utf-8"
+      );
+      const allProductsToJson: Array<product> = JSON.parse(allProductsDB);
+      const existenceIdCart: Array<cart> = allCartsInJson.filter((cart) => {
         return cart.id === idCart;
       });
-      const existenceIdProduct =
-        productsControllers.default.storeProducts.filter((product) => {
-          return product.id === idProd;
-        });
-      //si existen agrego el producto
+      const existenceIdProduct: Array<product> = allProductsToJson.filter((product) => {
+        return product.id === idProd;
+      });
       if (existenceIdCart.length > 0 && existenceIdProduct.length > 0) {
-        // aca lo deberia agregar
-        allCarts[idCart - 1].products.push(
-          productsControllers.default.storeProducts[idProd - 1]
-        );
-        console.log('all carts', allCarts);
-        
+        allCartsInJson[idCart - 1].products.push(existenceIdProduct[0]);
+        fs.writeFile("dist/store/carts.txt", JSON.stringify(allCartsInJson, null, 2));
+        return res.status(201).json({
+          message: `New product added a cart with id: ${idCart}`,
+          data: allCartsInJson[idCart - 1].products,
+          error: false,
+        });
       } else {
         if (existenceIdCart.length === 0) {
           return res.status(404).send({
@@ -188,7 +152,7 @@ const addProductToCart = async (req, res) => {
         }
         if (existenceIdProduct.length === 0)
           return res.status(404).send({
-            message: `Id: ${idProd}} of product not found`,
+            message: `Id: ${idProd} of product not found`,
             data: null,
             error: true,
           });
@@ -203,8 +167,8 @@ const addProductToCart = async (req, res) => {
   }
 };
 const deleteProductFromCart = async (req, res) => {
-  const idProd = parseInt(req.params.idProd)
-  const idCart = parseInt(req.params.id)
+  const idProd: number = parseInt(req.params.idProd);
+  const idCart: number = parseInt(req.params.id);
   try {
     if (isNaN(idCart) || isNaN(idProd)) {
       return res.status(404).send({
@@ -213,18 +177,28 @@ const deleteProductFromCart = async (req, res) => {
         error: true,
       });
     } else {
-      const existenceIdCart = allCarts.filter((cart) => {
+      const allCartsToBD: string = await fs.readFile("dist/store/carts.txt", "utf-8");
+      const allCartsInJson: Array<cart> = JSON.parse(allCartsToBD);
+      const allProductsDB: string = await fs.readFile(
+        "dist/store.txt",
+        "utf-8"
+      );
+      const allProductsToJson: Array<product> = JSON.parse(allProductsDB);
+      const existenceIdCart: Array<cart> = allCartsInJson.filter((cart) => {
         return cart.id === idCart;
       });
-      const existenceIdProduct =
-        productsControllers.default.storeProducts.filter((product) => {
-          return product.id === idProd;
-        });
+      const existenceIdProduct: Array<product> = allProductsToJson.filter((product) => {
+        return product.id === idProd;
+      });
       if (existenceIdCart.length > 0 && existenceIdProduct.length > 0) {
-        allCarts[idCart - 1].products.slice(idProd - 1, 1);
-        return res.status(204).send({
-          message: `Product: ${existenceIdProduct[0]} was deleted`,
-          data: allCarts,
+        const newProductList: Array<product> = allCartsInJson[idCart - 1].products.filter(
+          (prod) => prod.id !== idProd
+        );
+        allCartsInJson[idCart - 1].products = newProductList;
+        fs.writeFile("dist/store/carts.txt", JSON.stringify(allCartsInJson, null, 2));
+        return res.status(200).send({
+          message: `Product was deleted successfully`,
+          data: allCartsInJson[idCart - 1],
           error: false,
         });
       } else {

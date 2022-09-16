@@ -7,84 +7,44 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import * as productsControllers from "../products/index.js";
-const allCarts = [
-    {
-        id: 1,
-        timestamp: "10/10/10",
-        products: [
-            {
-                id: 1,
-                timestamp: "10/10/10",
-                name: "PRIMER CARRITO",
-                description: "PRIOMERITO PRODUCTO",
-                code: 10,
-                image: "www.asdjahdas.com/foto",
-                price: 3,
-                stock: 7,
-            },
-            {
-                id: 2,
-                timestamp: "11/10/10",
-                name: "silla",
-                description: "sillona para comer",
-                code: 1230,
-                image: "www.asdjahdas1231.com/foto",
-                price: 13,
-                stock: 72,
-            },
-        ],
-    },
-    {
-        id: 2,
-        timestamp: "13/10/10",
-        products: [
-            {
-                id: 1,
-                timestamp: "10/10/10",
-                name: "SEG CARRITO",
-                description: "mesa para comer",
-                code: 10,
-                image: "www.asdjahdas.com/foto",
-                price: 3,
-                stock: 7,
-            },
-            {
-                id: 3,
-                timestamp: "11/10/10",
-                name: "asdsadsad",
-                description: "sillasdsadsaddaomer",
-                code: 113,
-                image: "www.asdjahdas1231.com/foto",
-                price: 133,
-                stock: 7422,
-            },
-        ],
-    },
-];
+import fs from "fs/promises";
 const createCart = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const newCart = {
-        id: allCarts.length + 1,
-        timestamp: Date.now().toString(),
-        products: [],
-    };
-    allCarts.push(newCart);
-    return res.status(201).json({
-        message: "New cart created",
-        data: newCart.id,
-        error: false,
-    });
+    try {
+        const allCartsToBD = yield fs.readFile("dist/store/carts.txt", "utf-8");
+        const allCartsInJson = JSON.parse(allCartsToBD);
+        const newCart = {
+            id: allCartsInJson.length + 1,
+            timestamp: Date.now().toString(),
+            products: [],
+        };
+        allCartsInJson.push(newCart);
+        fs.writeFile("dist/store/carts.txt", JSON.stringify(allCartsInJson, null, 2));
+        return res.status(201).json({
+            message: `New cart created id: ${newCart.id}`,
+            data: newCart.id,
+            error: false,
+        });
+    }
+    catch (error) {
+        return res.status(500).json({
+            message: `An error has ocurred: ${error}`,
+            data: undefined,
+            error: true,
+        });
+    }
 });
 const deleteCart = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const idParam = parseInt(req.params.id);
     try {
         if (!isNaN(idParam)) {
-            const findCart = allCarts.filter((cart) => {
-                return cart.id === idParam;
+            const allCartsToBD = yield fs.readFile("dist/store/carts.txt", "utf-8");
+            const allCartsInJson = JSON.parse(allCartsToBD);
+            const findCart = allCartsInJson.filter((cart) => {
+                return cart.id !== idParam;
             });
-            if (findCart.length !== 0) {
-                // BORRARLO CON FILESYSTEM
-                return res.status(204).send({
+            if (findCart.length !== allCartsInJson.length) {
+                fs.writeFile("dist/store/carts.txt", JSON.stringify(findCart, null, 2));
+                return res.status(200).send({
                     message: "Cart deleted",
                     data: findCart,
                     error: false,
@@ -106,7 +66,7 @@ const deleteCart = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
     catch (error) {
         return res.status(500).send({
-            message: "An unexpected error has ocurred",
+            message: `An unexpected error has ocurred: ${error}`,
             data: null,
             error: true,
         });
@@ -116,7 +76,9 @@ const getProductsInCart = (req, res) => __awaiter(void 0, void 0, void 0, functi
     const idParam = parseInt(req.params.id);
     try {
         if (!isNaN(idParam)) {
-            const findCart = allCarts.filter((cart) => {
+            const allCartsToBD = yield fs.readFile("dist/store/carts.txt", "utf-8");
+            const allCartsInJson = JSON.parse(allCartsToBD);
+            const findCart = allCartsInJson.filter((cart) => {
                 return cart.id === idParam;
             });
             if (findCart.length !== 0) {
@@ -160,18 +122,24 @@ const addProductToCart = (req, res) => __awaiter(void 0, void 0, void 0, functio
             });
         }
         else {
-            // valido los ids q exitan
-            const existenceIdCart = allCarts.filter((cart) => {
+            const allCartsToBD = yield fs.readFile("dist/store/carts.txt", "utf-8");
+            const allCartsInJson = JSON.parse(allCartsToBD);
+            const allProductsDB = yield fs.readFile("dist/store.txt", "utf-8");
+            const allProductsToJson = JSON.parse(allProductsDB);
+            const existenceIdCart = allCartsInJson.filter((cart) => {
                 return cart.id === idCart;
             });
-            const existenceIdProduct = productsControllers.default.storeProducts.filter((product) => {
+            const existenceIdProduct = allProductsToJson.filter((product) => {
                 return product.id === idProd;
             });
-            //si existen agrego el producto
             if (existenceIdCart.length > 0 && existenceIdProduct.length > 0) {
-                // aca lo deberia agregar
-                allCarts[idCart - 1].products.push(productsControllers.default.storeProducts[idProd - 1]);
-                console.log('all carts', allCarts);
+                allCartsInJson[idCart - 1].products.push(existenceIdProduct[0]);
+                fs.writeFile("dist/store/carts.txt", JSON.stringify(allCartsInJson, null, 2));
+                return res.status(201).json({
+                    message: `New product added a cart with id: ${idCart}`,
+                    data: allCartsInJson[idCart - 1].products,
+                    error: false,
+                });
             }
             else {
                 if (existenceIdCart.length === 0) {
@@ -183,7 +151,7 @@ const addProductToCart = (req, res) => __awaiter(void 0, void 0, void 0, functio
                 }
                 if (existenceIdProduct.length === 0)
                     return res.status(404).send({
-                        message: `Id: ${idProd}} of product not found`,
+                        message: `Id: ${idProd} of product not found`,
                         data: null,
                         error: true,
                     });
@@ -210,17 +178,23 @@ const deleteProductFromCart = (req, res) => __awaiter(void 0, void 0, void 0, fu
             });
         }
         else {
-            const existenceIdCart = allCarts.filter((cart) => {
+            const allCartsToBD = yield fs.readFile("dist/store/carts.txt", "utf-8");
+            const allCartsInJson = JSON.parse(allCartsToBD);
+            const allProductsDB = yield fs.readFile("dist/store.txt", "utf-8");
+            const allProductsToJson = JSON.parse(allProductsDB);
+            const existenceIdCart = allCartsInJson.filter((cart) => {
                 return cart.id === idCart;
             });
-            const existenceIdProduct = productsControllers.default.storeProducts.filter((product) => {
+            const existenceIdProduct = allProductsToJson.filter((product) => {
                 return product.id === idProd;
             });
             if (existenceIdCart.length > 0 && existenceIdProduct.length > 0) {
-                allCarts[idCart - 1].products.slice(idProd - 1, 1);
-                return res.status(204).send({
-                    message: `Product: ${existenceIdProduct[0]} was deleted`,
-                    data: allCarts,
+                const newProductList = allCartsInJson[idCart - 1].products.filter((prod) => prod.id !== idProd);
+                allCartsInJson[idCart - 1].products = newProductList;
+                fs.writeFile("dist/store/carts.txt", JSON.stringify(allCartsInJson, null, 2));
+                return res.status(200).send({
+                    message: `Product was deleted successfully`,
+                    data: allCartsInJson[idCart - 1],
                     error: false,
                 });
             }
