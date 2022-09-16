@@ -47,3 +47,8 @@
 ### Eliminar un producto del carrito por su id de carrito y de producto
 #### url: /api/carrito/:id/productos/:idProducto
 #### metodo: DELETE
+
+
+# Observaciones
+
+## En algunos endpoints tiene validaciones al mandar mal la url de la imagen o al ingregar un nombre o codigo ya existente
