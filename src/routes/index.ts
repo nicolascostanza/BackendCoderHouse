@@ -4,7 +4,7 @@ import cartRoutes from "./cartRoutes.js";
 
 const router = express.Router();
 
-router.use("/products", productsRoutes);
-router.use("/carts", cartRoutes);
+router.use("/productos", productsRoutes);
+router.use("/carrito", cartRoutes);
 
 export default router;

@@ -60,9 +60,8 @@ const addProduct = async (req, res) => {
   if (!isAdmin) {
     return res
       .json({
-        message: "You are not authorized to make this request",
-        data: null,
-        error: true,
+        error: -1,
+        description: 'Ruta: /api/productos. Metodo: POST no autorizada',
       })
       .status(401);
   }
@@ -156,9 +155,8 @@ const updateProduct = async (req, res) => {
   if (!isAdmin) {
     return res
       .json({
-        message: "You are not authorized to make this request",
-        data: null,
-        error: true,
+        error: -1,
+        description: 'Ruta: /api/productos. Metodo: PUT no autorizada',
       })
       .status(401);
   }
@@ -272,9 +270,8 @@ const deleteProduct = async (req, res) => {
   if (!isAdmin) {
     return res
       .json({
-        message: "You are not authorized to make this request",
-        data: null,
-        error: true,
+        error: -1,
+        description: 'Ruta: /api/productos. Metodo: DELETE no autorizada',
       })
       .status(401);
   }
