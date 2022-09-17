@@ -1,0 +1,83 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.socket.io/4.5.0/socket.io.min.js"
+      integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="./css/styles.css">
+    <title>Challenge Class 12</title>
+  </head>
+  <body class="m-5">
+    <h1 class="text-primary">CREATE PRODUCT</h1>
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col">
+          <form id="data">
+            <div class="mb-3">
+              <label class="form-label">Name's Product</label>
+              <input class="form-control" id="title" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Price</label>
+              <input type="number" class="form-control" id="price" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Thumbnail</label>
+              <input class="form-control" id="thumbnail" />
+            </div>
+            <button
+              id="submit"
+              type="button"
+              class="btn btn-primary"
+              onclick="createProduct()"
+            >Guardar</button>
+          </form>
+          <h1 class="text-center text-primary">TABLE OF PRODUCTS</h1>
+          <div>
+            <div
+              class="d-flex container-fluid justify-content-between align-items-center border m-2"
+            >
+              <p class="text-center text-primary text-uppercase fs-2">Name</p>
+              <p class="text-center text-primary text-uppercase fs-2">Price</p>
+              <p
+                class="text-center text-primary text-uppercase fs-2"
+              >Thumbnail</p>
+            </div>
+            <div width="100%" class="container-fluid" id="productList">
+            </div>
+          </div>
+        </div>
+      </div>
+      <h1 class="text-center text-primary">CHAT</h1>
+      <section class="d-flex flex-column mb-3">
+          <input class="m-3" type="text" placeholder="Your email" id="email" />
+          <p class="text-danger fw-semibold" id="emailError"></p>
+        <input
+          class="m-3"
+          type="text"
+          placeholder="enter your message"
+          id="message"
+          style="height: 100px"
+        />
+        <button
+          type="button"
+          class="btn btn-primary"
+          id="submitMessage"
+          value="Send"
+        >Send a message</button>
+      </section>
+      <section id="chat"></section>
+    </div>
+    <script src="{{scriptPath}}"></script>
+  </body>
+</html>
