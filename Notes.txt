@@ -224,7 +224,7 @@ Clase 14:
     * Los loaders son transformaciones que se aplican en el código fuente de nuestras aplicaciones. Existen decenas de ellos, para usar cantidad de tecnologías y transformar código de preprocesadores, código HTML, Javascript, etc. Son como una especie de tareas que Webpack se encargará de realizar sobre nuestro código, cada una especializada en algo en concreto. ts-loader es un TypeScript loader para webpack. Mediante las rules definidas dentro de la entrada module, podemos establecer a qué archivos se aplican los loaders que sean necesarios.
 Clase 15:
     * importante: poner ; en los comandos q ingreso por la consola
-    * La sigla que se conoce como SQL corresponde a la expresión inglesa Structured Query   Language (en español “Lenguaje de Consulta Estructurado”)
+    * La sigla que se conoce como SQL corresponde a la expresión inglesa Structured Query Language (en español “Lenguaje de Consulta Estructurado”)
     * SQL es un tipo de lenguaje vinculado con la gestión de bases de datos de carácter relacional, que permite la especificación de distintas clases de operaciones entre éstas.
     * Gracias a la utilización del álgebra y de cálculos relacionales, el SQL brinda la posibilidad de realizar consultas con el objetivo de recuperar información de las bases de datos de manera sencilla
     * MySQL es un sistema de gestión de bases de datos relacional desarrollado bajo licencia dual: Licencia pública general/Licencia comercial por Oracle Corporation y está considerada como la base de datos de código abierto más popular del mundo.
@@ -308,6 +308,204 @@ CLASE 16:
         create database NOMBREQLEPONEMOS;
         use NOMBREQLEPUSIMOS;
     * SQLITE es una libreria en lenguaje C, es un motor de bases de datos como mysql. Es multiplataforma, su principal virtud. Es de dominio publico y lo tienen casi todos los dispositivos ya instalados
+CLASE 17:
+    * MongoDB es una base de datos No relacional, NoSQL, orientada a documentos que ofrece una gran escalabilidad y flexibilidad, y un modelo de consultas e indexación avanzado.
+    * El modelo de documentos de MongoDB resulta muy fácil de aprender y usar, y proporciona a los desarrolladores todas las funcionalidades que necesitan para satisfacer los requisitos más complejos a cualquier escala.
+    * MongoDB dispone de dos variantes de despliegue:
+        1) Local: con Mongo Server, a través de sus opciones Community y Enterprise.
+        2) Remota: mediante una plataforma configurada en la nube, lista para usar, llamada Mongo Atlas.
+    * Caracteristicas:
+        1) Almacena datos en documentos flexibles similares a JSON: la estructura de datos puede cambiarse con el tiempo.
+        2) El modelo de documento se asigna a los objetos en el código de su aplicación para facilitar el trabajo con los datos.
+        3) Las consultas ad hoc, la indexación y la agregación en tiempo real ofrecen maneras potentes de acceder a los datos y analizarlos.
+        4) MongoDB es una base de datos distribuida en su núcleo, por lo que la alta disponibilidad, la escalabilidad horizontal y la distribución geográfica están integradas y son fáciles de usar.
+        5) MongoDB es de uso gratuito.
+    * El concepto NoSQL define sistemas que difieren del modelo clásico SQL: Sistema de bases de datos relacionales. Lo más destacado de NoSQL es que no usan SQL como lenguaje principal de consultas.
+    * MongoDB es una base de datos orientada a documentos. No se basa en el concepto de Tabla Fila y Registro sino que se apoya en el concepto de Colección, Documento y Propiedad.
+    * Una colección en MongoDB es muy similar a una tabla de una base de datos. La tabla almacena registros (filas) mientras que las colecciones almacenan documentos.
+    * Aquí comienzan las diferencias importantes entre una base de datos SQL y una NoSQL. El concepto de fila y de documentos son bastante diferentes. Una fila está compuesta de columnas y siempre son las mismas para todas ellas. En cambio un documento está compuesto por claves y valores (key,value) y cada documento puede tener variaciones importantes con respecto al anterior dentro de una colección.
+    * Un documento embebido es un documento que está insertado dentro de otro y que ambos están ligados a la misma colección (podemos popular collecciones dentro de otras, como meter tablas dentro de otras tablas)
+    * en esta clase se muestra en las diapositivas la instalacion de mongo
+    * ventajas de mysql:
+        - Podemos ejecutar sentencias SQL directamente en nuestra base de datos.
+        - Posibilidad de abstracción de nuestra base de datos con algún ORM estilo Doctrine o Hibernate.
+        - Almacenamiento de datos totalmente organizado y jerarquizado con claves primarias y foráneas.
+        - Nos permite evitar la duplicidad de registros.
+        - Mejora notable en mantenimiento de datos en relación a la seguridad requerida de los mismos.
+    * desventajas de mysql:
+        - Si nuestro sistema escala y evoluciona, tendremos que haber diseñado nuestra base de datos según los posibles nuevos requerimientos.
+        - Requiere más espacio de almacenamiento que una base NoSQL.
+        - Las transacciones de datos son más pesadas frente a las bases de datos NoSQL.
+        - Los límites en los campos de las tablas nos pueden hacer perder datos si no los configuramos adecuadamente según el tamaño del dato que nos puedan introducir los usuarios.
+    * ventajas de mongodb:
+        - La escalabilidad y su carácter descentralizado hacen que soporte estructuras distribuidas.
+        - Permiten realizar sistemas más abiertos y flexibles debido a su fácil adaptación de nuevas evoluciones de nuestras aplicaciones web.
+        - No se requieren potentes recursos para poder trabajar con bases de datos NoSQL.
+        - Optimización de las consultas en base de datos para grandes cantidades de datos almacenados.
+    * desventajas de mongodb:
+        - Problemas con sentencias SQL ya que no admiten el 100% de las consultas existentes.
+        - No es capaz de realizar transacciones. Si bien en nuestra web o en una aplicación que hemos desarrollado podemos simular una transacción, MongoDB no tiene esa opción entre sus tantas capacidades.
+        - La principal desventaja de MongoDB es que carece de algo tan fundamental como los Joins.
+        - Falta de estandarización entre las diferentes bases de datos NoSQL.
+CLASE 18:
+    * mongodb comandos:
+        - db.coll.drop() : borra una colección y sus índices respectivos.
+        - db.dropDatabase() : elimina la base de datos actual.
+        - db.createCollection("contacts") : crea una colección en forma explícita.
+        - db.coll.stats() : refleja estadísticas del uso de la base.
+        - db.coll.storageSize() : tamaño de almacenamiento de la colección.
+        - db.coll.totalIndexSize() : tamaño total de todos los índices de la colección.
+        - db.coll.totalSize(): tamaño total en bytes de los datos de la colección más el tamaño de cada índice de la colección.
+        - db.coll.validate({full: true}) : comprueba la integridad de una colección.
+        - db.coll.renameCollection("new_coll", true) : renombra una colección, el  2do parámetro para borrar la colección destino si existe.
+    * Comando Create (insert). Detalle de comandos:
+        - db.coll.insertOne( {key:value} ) : inserta un documento en la colección.
+        - db.coll.insert( {key:value} ) : inserta un documento en la colección (en desuso).
+        - db.coll.insertMany( [ {key:value}, {key:value}, {key:value} ] ) : inserta un array de documentos la colección en modo Bulk.
+    * Comando Read (find). Detalles de comandos:
+        - db.coll.findOne() : busca un documento dentro de una colección.
+        - db.coll.find() : busca todos los documentos dentro de una colección.
+        - db.coll.find( {key:value} ) : busca los documentos dentro de una colección que satisfacen el filtro de búsqueda.
+        - db.coll.find().pretty() : devuelve todos los documentos conservando el formato de objeto de salida.
+    * Cuando insertamos un documento en MongoDB, el motor de base de datos crea un campo adicional llamado ObjectID identificado con la clave _id. Este es un número compuesto por 12 bytes que asegura un identificador único para cada documento. Se considera clave primaria y contiene tres secciones:
+        - unix timestamp
+        - random value
+        - contador
+    * Comandos Count ---> Son funciones que cuentan la cantidad de documentos presentes en una colección. Algunas de ellas pueden tener la opción de filtro.
+        - db.coll.estimatedDocumentCount() ---> Devuelve la cantidad total de documentos encontrados en la colección.
+        - db.coll.countDocuments( {key: val} ) ---> Devuelve la cantidad de documentos encontrados en la colección (con filtro de query).
+    * Comando Read con filtros de búsqueda
+        - db.coll.find( {key: {$operator: val}} ) : devuelve los documentos según el operador de filtro utilizado.
+        - Operadores para filtros de query:
+            $and : Realiza operación AND -> sintaxis: {$and: [ {},{} ] }
+            $or : Realiza operación OR -> sintaxis: {$or: [ {},{} ] }
+            $lt : Coincide con valores que son menores que un valor especificado.
+            $lte : Coincide con valores menores o iguales a un valor especificado.
+            $gt : Coincide con valores mayores a un valor especificado.
+            $gte : Coincide con valores mayores o iguales a un valor especificado.
+            $ne : Coincide con valores que no son iguales a un valor especificado.
+            $eq : Selecciona los documentos que son iguales a un valor especificado.
+            $exists : Selecciona los documentos según la existencia de un campo.
+            $in : Selecciona los documentos especificados en un array.
+            sintaxis: {key:{$in: [array of values] } }
+            $nin : Coincide con ninguno de los valores especificados en un array.
+            $size : Coincide con el número de elementos especificados.
+            $all : Coincide con todos los valores definidos dentro de un array.
+            $elemMatch : Coincide con algún valor definido dentro del query.
+            db.coll.distinct( val ) ---> devuelve un array con los distintos valores que toma un determinado campo en los documentos de la colección.
+            db.coll.find({doc.subdoc:value}) ---> Se utiliza para filtrar subdocumentos.
+            db.coll.find({name: /^Max$/i}) ---> filtra utilizando expresiones regulares
+    * Proyecciones en mongodb
+        - La proyección se utiliza para devolver un conjunto determinado de campos de un documento. En general devolvemos todos los campos de un documento, pero es posible que no necesitemos todos.
+        - Es equivalente en SQL de pasar de hacer un SELECT * a realizar SELECT nombrecampo.
+        - Las proyecciones deben ser incorporadas en el segundo parámetro del comando find. Por ej. db.coll.find({},{"nombre":1}) muestra sólo el campo nombre y el _id de todos documentos de la coll
+        - Las proyecciones se realizan indicando el nombre del campo, con valor 1 si queremos mostrarlo y 0 por el contrario.
+    * MongoDB: sort limit skip
+        - sort( { campoA: 1 ó -1 , campoB: 1 ó -1 , ... } ) : Especifica el orden en el que la consulta devuelve documentos coincidentes. El ó los campos por los cuales ordena pueden contener los valores 1 y -1, estableciendo orden ascendente y descendente respectivamente. El orden se evalúa de izquierda a derecha en caso que los valores coincidan.
+        - limit(num): Especifica el número máximo de documentos devueltos.
+        - skip(offset) : Saltea la cantidad de documentos especificada.
+        - Se pueden utilizar en forma combinada. Ejemplo: db.Employee.find().skip(2).limit(3).sort({Employeeid:-1})
+    * Update:
+        - db.collection.updateOne(query, update, options)
+        query: especifica el filtro de documentos a ser actualizados.
+        update: contiene los datos a ser actualizados con sus operadores respectivos: $set, $unset, $inc, $rename, $mul, $min, $max, etc.
+        options: contiene varias opciones para la actualización, entre ellas:
+        upsert (true ó false) : Es una opción para hacer un insert en caso de que el registro no exista.
+        - db.coll.updateMany(query, update, options) Igual que el anterior, pero hace una actualización múltiple en caso de que el filtro de query devuelva varios resultados
+    * Delete:
+        - db.coll.deleteOne( {key: val} ): Elimina un sólo documento (el primero) que coincide con el filtro especificado.
+        - db.coll.deleteMany( {key: val} ): Elimina todos los documentos que coinciden con el filtro especificado.
+        - db.coll.remove( {key: val} ): Elimina documentos de una colección.
+        - db.coll.findOneAndDelete( filter, options ): Elimina un solo documento según el filtro y los criterios de clasificación. Algunas de las options pueden ser
+            -- sort: para establecer orden para el filtro
+            -- projection: para elegir campos de salida.
+    * creacion de usuarios y permisos:
+        - En MongoDB es posible crear usuarios y asignarles acceso mediante roles. Veremos cómo crear un usuario y asignarle un rol para que tenga ciertos accesos limitados a una base de datos.
+        - Crearemos dos usuarios para una base de datos
+            - Usuario lector: tendrá acceso de lectura a la base de datos.
+            - Usuario escritor: tendrá acceso de lectura y escritura a la base de datos.
+            - usuario lector ---> Utilizaremos el método createUser. Este acepta como parámetro un objeto con las siguientes propiedades:
+                user: nombre del usuario. Le asignaremos lector.
+                pwd: contraseña para el usuario.
+                roles: arreglo de objetos. Sirve si el usuario tendrá acceso a múltiples bases de datos, estableciendo permisos para cada acceso.
+                IMPORTANTE: Ejecutar el servidor con acceso root: mongod. Ejecutar en el cliente use admin antes de createUser(...)
+                MongoDB viene con roles predefinidos. Uno de ellos es el role read, que permite ejecutar métodos de sólo lectura.
+                La propiedad db es donde se  indica a qué base de datos se le asignará dicho rol.
+            - - Usuario escritor ---> Crearemos el usuario escritor. El proceso es similar, pero en este caso el role ya no será read sino readWrite. Con el rol readWrite el usuario tendrá acceso a los métodos de lectura y escritura de la base de datos. A continuación debemos verificar que cada usuario cuenta con los accesos correctos.
+CLASE 19:
+    * Mongoose es una dependencia Javascript que realiza la conexión a la instancia de MongoDB. Pero la magia real del módulo Mongoose es la habilidad para definir un esquema del documento. MongoDB usa colecciones para almacenar múltiples documentos, los cuales no necesitan tener la misma estructura. Cuando tratamos con objetos es necesario que los documentos sean algo parecido. En este punto nos ayudan los esquemas y modelos de Mongoose.
+    * Mongoose usa un objeto Schema para definir una lista de propiedades del documento, cada una con su propio tipo y características para forzar la estructura del documento.
+    * Después de especificar un esquema deberemos definir un Modelo constructor para así poder crear instancias de los documentos de MongoDB
+    * Mongoose es un Object Document Mapper (ODM). Esto significa que permite definir objetos con un esquema fuertemente tipado que se asigna a un documento MongoDB.
+    * Mongoose proporciona una amplia cantidad de funcionalidades para crear y trabajar con esquemas.
+    * Actualmente contiene ocho SchemaTypes definidos para una propiedad:
+        String (Cadena)
+        Number (Número)
+        Date (Fecha)
+        Buffer
+        Boolean (Booleano)
+        Mixed (Mixto)
+        ObjectId
+        Array (Matriz)
+    * configuracion del proyecto con Mongoose. Pasos a seguir
+        Creamos un proyecto Node.js con npm init -y
+        Instalamos la dependencia mongoose con npm i mongoose
+        Describimos nuestro modelo de datos ( Schema + Model ) con las validaciones necesarias.
+        Levantamos el motor de base de datos MongoDB.
+        Creamos la función de conexión mediante mongoose, con las opciones configuradas.
+        Con mongoose realizamos las operaciones CRUD hacia MongoDB: Read, Create, Update y Delete.
+        Mostramos consultas con distintos filtros de Query y con el uso de projection, funciones sort, limit y skip
+CLASE 20:
+    * DBaaS significa database as a service. Con esto nos referimos a la ejecución y gestión de las bases de datos, optimizadas y alojadas en la infraestructura de un proveedor de servicios cloud. De esta manera, para gestionar las bases de datos en el cloud debemos contar con un servicio «por detrás» como PaaS o IaaS, para estar seguros de tener la infraestructura necesaria.
+    * modalidades de servicio:
+        - Modelo clásico: el cliente hace uso de la infraestructura física del proveedor para alojar sus bases de datos.
+        - Alojamiento gestionado: el cliente se desentiende de cualquier tarea de mantenimiento y gestión avanzada de la base de datos, que asumirá el proveedor.
+    * ventajas de DBaaS:
+        - Se elimina la infraestructura física de la ecuación ahorrando en costos, ya que el proveedor es responsable del mantenimiento y la disponibilidad de los sistemas. Los usuarios son responsables de sus propios datos.
+        - Ahorro de costos generalizado. Además de prescindir de las inversiones físicas, con DBaaS se puede tener menos personal dedicado a esta tarea, ahorrar en energía y aprovechar mejor el espacio físico.
+        - Escalabilidad. Con DBaaS podemos acceder a diferentes tarifas basadas principalmente en el rendimiento deseado y nuestras necesidades.
+        - Personal cualificado. A través de DBaaS se accede a expertos en bases de datos que se encargarán de todas las tareas de mantenimiento, actualización, seguridad y gestión.
+    * MongoDB Atlas es un servicio de Cloud Database (Base de Datos en la Nube), que nos permite crear y administrar nuestra MongoDB desde cualquier lugar del mundo a través de su plataforma.
+    * MongoDB Atlas está orientado a ser accesible desde el navegador y fue desarrollado con el objetivo de aliviar el trabajo de los desarrolladores, al quitarles la necesidad de instalar y administrar entornos de Base de Datos.
+    * Caracteristicas principales de MONGODB Atlas:
+        - Automatización: una manera fácil de crear, lanzar y escalar aplicaciones en MongoDB.
+        - Flexibilidad: DBaaS con todo lo necesario para las aplicaciones modernas.
+        - Seguridad: varios niveles de seguridad disponibles.
+        - Escalabilidad: gran escalabilidad sin interrumpir la actividad.
+        - Alta disponibilidad: implementaciones con tolerancia a errores y autoreparación predeterminadas.
+        - Alto rendimiento: el necesario para las cargas de trabajo exigentes.
+    * Ventajas MongoDB Atlas:
+        1) Ejecución
+            - Puesta en marcha de un clúster en segundos.
+            - Implementaciones replicadas y sin interrupción.
+            - Total escalabilidad: escalado horizontal o vertical sin interrumpir la actividad.
+            - Revisiones automáticas y actualizaciones simplificadas.
+        2) Protección y seguridad
+            - Autenticación y cifrado.
+            - Copias de seguridad continuas con recuperación temporal.
+            - Supervisión detallada y alertas personalizadas.
+        3) Libertad de movimiento
+            - Modelo de planes de precio según demanda: se factura por hora.
+            - Compatible con diferentes tipos de de servicios de nube (AWS, GCP, Azure).
+            - Parte de un paquete de productos y servicios para todas las fases de la aplicación.
+    * configuracion de cuenta en MongoDB Atlas
+        1) Nos dirigimos a la página oficial de MongoDB Atlas
+        2) Seleccionamos START FREE y nos registramos con un correo. También podemos ingresar con Google.
+        3) Luego nos redireccionará a la próxima ventana donde continuamos haciendo click en Create cluster.
+        4) Nos redireccionará a un dashboard donde el clúster aún se seguirá creando, pero podemos explorar mientras se crea en segundo plano.
+        5) le damos a connect y despues a add your cluster ip address
+        5.1) MongoDB Atlas nos ofrece una seguridad de conexión por IP, esto quiere decir que podemos configurarlo de 2 maneras
+            - Add Your Current IP Address: opción para poner nuestra IP, pero cada vez que cambiemos la PC tenemos que volver a configurar.
+            - Add a Different IP Address: para configurar una IP que permita las conexiones de cualquier PC, podemos colocar la IP 0.0.0.0/0.
+        6) Configuración de usuario de acceso. Ingresamos usuario y contraseña
+        7) Opciones de coneccion. Elegimos la q queremos entre CLI, nodeJS o Mongo Compass GUI. Y luego nos da el codigo a copiar para realizar la conexion
+    * Firebase es una plataforma para el desarrollo de aplicaciones web y móviles desarrollada por James Tamplin y Andrew Lee en 2011 y adquirida por Google en 2014, empezando con su producto base: base de datos en tiempo real. Firebase permite que, en lugar de hacer peticiones AJAX, el usuario se conecte a la base de datos y automáticamente envíe los datos. Firebase puede ser administrado por cualquier aplicación backend y hay múltiples dependencias disponibles para lograr la conexión en cualquier plataforma. No necesitamos casarnos con Firebase, se usa lo que se necesita . Usa Cloud Storage: base de datos para que usuarios puedan compartir ficheros e imágenes, sin necesidad de hacer bases de datos propias, que para imágenes a veces puede ser un poco ‘tedioso’. Usa Cloud Functions: con esto nos ahorramos toda la infraestructura de backend. Es lo que más cobra Google, ya que sabe que es en lo que más ahorramos. Con el plan Blaze con las CF puedes hacer llamadas a tu API, no hay firewalls.
+    * creacion de proyecto con nodejs y firebase:
+        1) Creamos un proyecto Node.js con npm init -y
+        2) Instalamos el paquete npm para trabajar con Firebase en la carpeta de nuestro proyecto: npm i firebase-admin
+        3) Incluimos en el proyecto el archivo JSON descargado desde el botón 'generar nueva clave privada' de la configuración de nuestro servidor en modo admin.
+        4) Generamos el archivo server.js y escribimos el código de conexión hacia la base de datos Firebase como se detalla a continuación:
+
 
 
 
