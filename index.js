@@ -1,6 +1,4 @@
 import express from "express";
-import { getAllProducts, createProduct } from "./controllers/products/index.js";
-import { chatRead } from "./controllers/chat/index.js";
 import { fileURLToPath } from "url";
 import { Server as HttpServer } from "http";
 import { Server as IOServer } from "socket.io";
@@ -9,6 +7,8 @@ import path from "path";
 import { engine } from "express-handlebars";
 import productsDatabase from "./database/productsDatabase.js";
 import { options as productOptions } from "./database/options/productOptions.js";
+import ChatDatabase from "./database/chatDatabase.js";
+import { options as chatOptions } from "./database/options/chatOptions.js";
 
 const db = new productsDatabase(productOptions);
 // const pug = require("pug");
@@ -70,10 +70,12 @@ app.listen(PORT, () => {
 });
 
 io.on("connection", async (socket) => {
-  const chatINFO = await chatRead();
+  const dbMessage = new ChatDatabase(chatOptions);
+  const chatINFO = await dbMessage.getMessages();
   socket.emit("getMessages", chatINFO);
-  socket.on("newMessage", (msg) => {
-    messages.push(msg);
-    io.sockets.emit("updateMessages", messages);
+  socket.on("newMessage", async (msg) => {
+    await dbMessage.saveMessage(msg);
+    const chatINFO = await dbMessage.getMessages();
+    io.sockets.emit("updateMessages", chatINFO);
   });
 });

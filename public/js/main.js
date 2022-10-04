@@ -1,4 +1,4 @@
-const socket = io.connect();
+const socket = io.connect('http://localhost:8080');
 const btnSubmitProduct = document.getElementById("submit");
 const btnSubmitMessage = document.getElementById("submitMessage");
 
@@ -106,6 +106,8 @@ btnSubmitMessage?.addEventListener("click", (e) => {
 
 // obtengo los mensajes de otros usuarios
 socket.on("updateMessages", (messages) => {
+  console.log('messages', messages);
+  
   const html = messages
     .map((msg) => {
       return `			<div class='d-flex justify-content-between py-2'>

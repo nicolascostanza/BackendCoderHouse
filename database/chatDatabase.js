@@ -9,8 +9,8 @@ export default class ChatDatabase {
     return this.knex.schema.dropTableIfExists("chat").finally(() => {
       return this.knex.schema.createTable("chat", (table) => {
         table.increments("id").primary();
+        table.string("date").notNullable();
         table.string("email", 50).notNullable();
-        table.date("date").notNullable();
         table.string("message").notNullable();
       });
     });
