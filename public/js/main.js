@@ -23,6 +23,7 @@ socket.on("getData", (products) => {
 
 // envio producto creado al servidor
 btnSubmitProduct?.addEventListener("click", (e) => {
+  e.preventDefault();
   const product = {
     title: document.getElementById("title").value,
     price: document.getElementById("price").value,
@@ -33,7 +34,6 @@ btnSubmitProduct?.addEventListener("click", (e) => {
 
 // escucho cambio de productos agregados por otros usuarios
 socket.on("updateProducts", (products) => {
-  console.log(products);
   const html = products
     .map((product) => {
       return `<div class='d-flex justify-content-between py-2'>

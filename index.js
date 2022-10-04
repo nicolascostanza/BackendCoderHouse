@@ -1,12 +1,17 @@
-const express = require("express");
-// websockets
-const { Server: HttpServer } = require("http");
-const { Server: IOServer } = require("socket.io");
+import express from "express";
+import { getAllProducts, createProduct } from "./controllers/products/index.js";
+import { chatRead } from "./controllers/chat/index.js";
+import { fileURLToPath } from "url";
+import { Server as HttpServer } from "http";
+import { Server as IOServer } from "socket.io";
+import routes from "./routes/index.js";
+import { storeProducts } from "./controllers/products/index.js";
+import path from "path";
+import { engine } from "express-handlebars";
+import productsDatabase from "./database/productsDatabase.js";
+import { options as productOptions } from "./database/options/productOptions.js";
 
-const routes = require("./routes/index");
-const { storeProducts } = require("./controllers/products");
-const path = require("path");
-const { engine } = require("express-handlebars");
+const db = new productsDatabase(productOptions);
 // const pug = require("pug");
 // const ejs = require("ejs");
 const messages = [];
@@ -16,6 +21,10 @@ const PORT = process.env.PORT || 3000;
 
 const httpServer = new HttpServer(app);
 const io = new IOServer(httpServer);
+
+const __filename = fileURLToPath(import.meta.url);
+
+const __dirname = path.dirname(__filename);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -59,19 +68,21 @@ app.listen(PORT, () => {
   console.log(`APP listen on port: ${PORT}`);
 });
 
-
-io.on("connection", (socket) => {
-  socket.emit("getData", storeProducts);
-  socket.on("newProduct", (prod) => {
-    storeProducts.push(prod);
-    io.sockets.emit("updateProducts", storeProducts);
+io.on("connection", async (socket) => {
+  const productos = await getAllProducts();
+  socket.emit("getData", productos);
+  socket.on("newProduct", async (prod) => {
+    console.log(prod);
+    // tengo q agregarlo a la base de datos
+    const productos = await getAllProducts();
+    io.sockets.emit("updateProducts", productos);
   });
-  socket.emit("getMessages", messages);
-  socket.on('newMessage', (msg) => {
+  const chatINFO = await chatRead();
+  socket.emit("getMessages", chatINFO);
+  socket.on("newMessage", (msg) => {
     messages.push(msg);
     io.sockets.emit("updateMessages", messages);
   });
 });
 
-
-
+//  TODO ver la parte de mensajes con sqlite
