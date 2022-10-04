@@ -3,20 +3,14 @@ import { options as productOptions } from "../../database/options/productOptions
 
 const db = new productsDatabase(productOptions);
 
-export const storeProducts = [
-  {
-    title: "ball",
-    price: 31,
-    thumbnail:
-      "https://assets.adidas.com/images/w_600,f_auto,q_auto/28530d07245942fc944dae680084fb30_9366/Pelota_Al_Rihla_Pro_Blanco_H57783_01_standard.jpg",
-  },
-];
-
 export const getAllProducts = async (_req, res) => {
   try {
     const productos = await db.getAll();
-    console.log("productos de controllers", productos);
-    return productos;
+    return res.status(200).json({
+      message: 'all products',
+      data: productos,
+      error: true,
+    });
   } catch (error) {
     return res.status(500).json({
       message: error,
@@ -79,15 +73,12 @@ export const createProduct = async (req, res) => {
         price: req.body.price,
         thumbnail: req.body.thumbnail,
       };
-      const response = await db.saveProduct(product);
-      return response;
-      // res
-      // .json({
-      //   message: "Product created !",
-      //   data: response,
-      //   error: false,
-      // })
-      // .status(201);
+      await db.saveProduct(product);
+      return res.status(201).json({
+        message: 'product added !',
+        data: product,
+        error: true,
+      });
     } else {
       res.status(400).json({
         message: "Invalid body",
@@ -126,10 +117,10 @@ export const putById = async (req, res) => {
       price: req.body.price,
       thumbnail: req.body.thumbnail,
     };
-    const response = await db.updateById(req.params.id, productToEdited);
+    await db.updateById(req.params.id, productToEdited);
     res.status(200).json({
       message: "Product edited !",
-      data: response,
+      data: productToEdited,
       error: false,
     });
   } catch (err) {
@@ -144,10 +135,10 @@ export const putById = async (req, res) => {
 export const deleteProduct = async (req, res) => {
   const { id } = req.params;
   try {
-    const producto = await client.getById(id);
+    const producto = await db.getById(id);
     if (producto.length != 0) {
       await db.deleteById(id);
-      res.status(200).json({ message: "producto borrado con exito" });
+      return res.status(200).json({ message: "producto borrado con exito", error: false });
     } else {
       res.status(400).json({ error: "no existen productos con este id" });
     }

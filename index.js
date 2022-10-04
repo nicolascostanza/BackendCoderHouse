@@ -5,7 +5,6 @@ import { fileURLToPath } from "url";
 import { Server as HttpServer } from "http";
 import { Server as IOServer } from "socket.io";
 import routes from "./routes/index.js";
-import { storeProducts } from "./controllers/products/index.js";
 import path from "path";
 import { engine } from "express-handlebars";
 import productsDatabase from "./database/productsDatabase.js";
@@ -55,8 +54,10 @@ app.set("views", "./views");
 app.use("/api", routes);
 
 app.get("/listProducts", async (_req, res) => {
+  const productos = await db.getAll();
+  console.log(productos);
   return res.render("listProducts", {
-    data: storeProducts,
+    data: productos,
   });
 });
 
@@ -69,14 +70,6 @@ app.listen(PORT, () => {
 });
 
 io.on("connection", async (socket) => {
-  const productos = await getAllProducts();
-  socket.emit("getData", productos);
-  socket.on("newProduct", async (prod) => {
-    console.log(prod);
-    // tengo q agregarlo a la base de datos
-    const productos = await getAllProducts();
-    io.sockets.emit("updateProducts", productos);
-  });
   const chatINFO = await chatRead();
   socket.emit("getMessages", chatINFO);
   socket.on("newMessage", (msg) => {
@@ -84,5 +77,3 @@ io.on("connection", async (socket) => {
     io.sockets.emit("updateMessages", messages);
   });
 });
-
-//  TODO ver la parte de mensajes con sqlite
