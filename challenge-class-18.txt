@@ -1,0 +1,338 @@
+-----------CREO LA BASE DE DATOS-----------
+COMANDO:
+use ecommerce
+
+-----------INSERTO COLLECTION PRODUCTOS CON 10 DOCUMENTOS-------
+COMANDO:
+db.productos.insertMany([{"title": "mesa" , "price": 948,"thumbnail": "https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg" },{"title": "silla", "price": 123 ,"thumbnail": "https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg" },{"title": "cadena" , "price": 3425,"thumbnail": "https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"},{"title": "bicicleta", "price": 872,"thumbnail": "https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"},{"title": "martillo", "price": 4529,"thumbnail": "https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"},{"title": "madera", "price": 102,"thumbnail": "https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"},{"title": "botella", "price": 395,"thumbnail": "https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"},{"title": "monitor", "price": 3942,"thumbnail": "https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"},{"title": "auto", "price": 4321,"thumbnail": "https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"},{"title": "motor", "price": 2324,"thumbnail": "https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"}])
+
+RESPUESTA:
+{
+        "acknowledged" : true,
+        "insertedIds" : [
+                ObjectId("633dcb6f94bfaf94a12aa93c"),
+                ObjectId("633dcb6f94bfaf94a12aa93d"),
+                ObjectId("633dcb6f94bfaf94a12aa93e"),
+                ObjectId("633dcb6f94bfaf94a12aa93f"),
+                ObjectId("633dcb6f94bfaf94a12aa940"),
+                ObjectId("633dcb6f94bfaf94a12aa941"),
+                ObjectId("633dcb6f94bfaf94a12aa942"),
+                ObjectId("633dcb6f94bfaf94a12aa943"),
+                ObjectId("633dcb6f94bfaf94a12aa944"),
+                ObjectId("633dcb6f94bfaf94a12aa945")
+        ]
+}
+
+-----------INSERTO COLLECTION MENSAJES CON 10 DOCUMENTOS-------------
+COMANDO:
+db.mensajes.insertMany([{"email": "jp@gmail.com", "fecha": "26/09/2022 20:02", "mensaje": "Hola!"}, {"email": "rz@gmail.com", "fecha": "26/09/2022 20:03", "mensaje": "Hola a todos!"}, {"email": "jp@gmail.com", "fecha": "26/09/2022 20:04", "mensaje": "Como va la cosa?"}, {"email": "rrz@gmail.com", "fecha": "26/09/2022 20:06", "mensaje": "Hola, desde Japón"}, {"email": "jp@gmail.com", "fecha": "26/09/2022 20:07", "mensaje": "Que bueno! Que haces por acá?"}, {"email": "tyu@gmail.com", "fecha": "26/09/2022 20:10", "mensaje": "De que hablan?"}, {"email": "jp@gmail.com", "fecha": "26/09/2022 20:12", "mensaje": "Nos estamos presentando"}, {"email": "you@gmail.com", "fecha": "26/09/2022 20:14", "mensaje": "Hola desde argentina"}, {"email": "jp@gmail.com", "fecha": "26/09/2022 20:15", "mensaje": "Estamos internacionales"}, {"email": "rty@gmail.com", "fecha": "26/09/2022 20:17", "mensaje": "Hola y chau!"}])
+
+RESPUESTA:
+{
+        "acknowledged" : true,
+        "insertedIds" : [
+                ObjectId("633dcc3b94bfaf94a12aa946"),
+                ObjectId("633dcc3b94bfaf94a12aa947"),
+                ObjectId("633dcc3b94bfaf94a12aa948"),
+                ObjectId("633dcc3b94bfaf94a12aa949"),
+                ObjectId("633dcc3b94bfaf94a12aa94a"),
+                ObjectId("633dcc3b94bfaf94a12aa94b"),
+                ObjectId("633dcc3b94bfaf94a12aa94c"),
+                ObjectId("633dcc3b94bfaf94a12aa94d"),
+                ObjectId("633dcc3b94bfaf94a12aa94e"),
+                ObjectId("633dcc3b94bfaf94a12aa94f")
+        ]
+}
+
+------------LISTO TODOS LOS DOCUMENTOS DE CADA COLLECTION-----------------------------
+COMANDO:
+db.productos.find().pretty()
+
+RESPUESTA:
+{
+        "_id" : ObjectId("633dcb6f94bfaf94a12aa93c"),
+        "title" : "mesa",
+        "price" : 948,
+        "thumbnail" : "https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"
+}
+{
+        "_id" : ObjectId("633dcb6f94bfaf94a12aa93d"),
+        "title" : "silla",
+        "price" : 123,
+        "thumbnail" : "https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"
+}
+{
+        "_id" : ObjectId("633dcb6f94bfaf94a12aa93e"),
+        "title" : "cadena",
+        "price" : 3425,
+        "thumbnail" : "https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"
+}
+{
+        "_id" : ObjectId("633dcb6f94bfaf94a12aa93f"),
+        "title" : "bicicleta",
+        "price" : 872,
+        "thumbnail" : "https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"
+}
+{
+        "_id" : ObjectId("633dcb6f94bfaf94a12aa940"),
+        "title" : "martillo",
+        "price" : 4529,
+        "thumbnail" : "https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"
+}
+{
+        "_id" : ObjectId("633dcb6f94bfaf94a12aa941"),
+        "title" : "madera",
+        "price" : 102,
+        "thumbnail" : "https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"
+}
+{
+        "_id" : ObjectId("633dcb6f94bfaf94a12aa942"),
+        "title" : "botella",
+        "price" : 395,
+        "thumbnail" : "https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"
+}
+{
+        "_id" : ObjectId("633dcb6f94bfaf94a12aa943"),
+        "title" : "monitor",
+        "price" : 3942,
+        "thumbnail" : "https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"
+}
+{
+        "_id" : ObjectId("633dcb6f94bfaf94a12aa944"),
+        "title" : "auto",
+        "price" : 4321,
+        "thumbnail" : "https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"
+}
+{
+        "_id" : ObjectId("633dcb6f94bfaf94a12aa945"),
+        "title" : "motor",
+        "price" : 2324,
+        "thumbnail" : "https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"
+}
+
+COMANDO:
+db.mensajes.find().pretty()
+
+RESPUESTA:
+{
+        "_id" : ObjectId("633dcc3b94bfaf94a12aa946"),
+        "email" : "jp@gmail.com",
+        "fecha" : "26/09/2022 20:02",
+        "mensaje" : "Hola!"
+}
+{
+        "_id" : ObjectId("633dcc3b94bfaf94a12aa947"),
+        "email" : "rz@gmail.com",
+        "fecha" : "26/09/2022 20:03",
+        "mensaje" : "Hola a todos!"
+}
+{
+        "_id" : ObjectId("633dcc3b94bfaf94a12aa948"),
+        "email" : "jp@gmail.com",
+        "fecha" : "26/09/2022 20:04",
+        "mensaje" : "Como va la cosa?"
+}
+{
+        "_id" : ObjectId("633dcc3b94bfaf94a12aa949"),
+        "email" : "rrz@gmail.com",
+        "fecha" : "26/09/2022 20:06",
+        "mensaje" : "Hola, desde Japón"
+}
+{
+        "_id" : ObjectId("633dcc3b94bfaf94a12aa94a"),
+        "email" : "jp@gmail.com",
+        "fecha" : "26/09/2022 20:07",
+        "mensaje" : "Que bueno! Que haces por acá?"
+}
+{
+        "_id" : ObjectId("633dcc3b94bfaf94a12aa94b"),
+        "email" : "tyu@gmail.com",
+        "fecha" : "26/09/2022 20:10",
+        "mensaje" : "De que hablan?"
+}
+{
+        "_id" : ObjectId("633dcc3b94bfaf94a12aa94c"),
+        "email" : "jp@gmail.com",
+        "fecha" : "26/09/2022 20:12",
+        "mensaje" : "Nos estamos presentando"
+}
+{
+        "_id" : ObjectId("633dcc3b94bfaf94a12aa94d"),
+        "email" : "you@gmail.com",
+        "fecha" : "26/09/2022 20:14",
+        "mensaje" : "Hola desde argentina"
+}
+{
+        "_id" : ObjectId("633dcc3b94bfaf94a12aa94e"),
+        "email" : "jp@gmail.com",
+        "fecha" : "26/09/2022 20:15",
+        "mensaje" : "Estamos internacionales"
+}
+{
+        "_id" : ObjectId("633dcc3b94bfaf94a12aa94f"),
+        "email" : "rty@gmail.com",
+        "fecha" : "26/09/2022 20:17",
+        "mensaje" : "Hola y chau!"
+}
+
+-------------------------MOSTRAR LA CANTIDAD DE DOCUMENTOS EN CADA COLLECTION----------------
+COMANDO:
+db.productos.estimatedDocumentCount()
+
+RESPUESTA:
+10
+
+COMANDO:
+db.mensajes.estimatedDocumentCount()
+
+RESPUESTA:
+10
+
+-----------------------CRUD--------------------------------
+a) Agregar un producto más en la colección de productos
+
+CODIGO:
+db.productos.insertOne({"title": "tenedor" , "price": 321,"thumbnail": "https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg" })
+
+RESPUESTA:
+{
+        "acknowledged" : true,
+        "insertedId" : ObjectId("633dce3a94bfaf94a12aa950")
+}
+
+b) Realizar una consulta por nombre de producto específico
+
+b.1) Listar los productos con precio menor a 1000 pesos
+COMANDO:
+db.productos.find({"price": {$lt: 1000}}).pretty()
+
+RESPUESTA:
+{
+        "_id" : ObjectId("633dcb6f94bfaf94a12aa93c"),
+        "title" : "mesa",
+        "price" : 948,
+        "thumbnail" : "https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"
+}
+{
+        "_id" : ObjectId("633dcb6f94bfaf94a12aa93d"),
+        "title" : "silla",
+        "price" : 123,
+        "thumbnail" : "https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"
+}
+{
+        "_id" : ObjectId("633dcb6f94bfaf94a12aa93f"),
+        "title" : "bicicleta",
+        "price" : 872,
+        "thumbnail" : "https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"
+}
+{
+        "_id" : ObjectId("633dcb6f94bfaf94a12aa941"),
+        "title" : "madera",
+        "price" : 102,
+        "thumbnail" : "https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"
+}
+{
+        "_id" : ObjectId("633dcb6f94bfaf94a12aa942"),
+        "title" : "botella",
+        "price" : 395,
+        "thumbnail" : "https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"
+}
+{
+        "_id" : ObjectId("633dce3a94bfaf94a12aa950"),
+        "title" : "tenedor",
+        "price" : 321,
+        "thumbnail" : "https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"
+}
+
+
+b.2) Listar los productos con precio entre los 1000 a 3000 pesos.
+COMANDO:
+db.productos.find({$and: [{"price": {$gte: 1000}},{"price": {$lte: 3000}}]}).pretty()
+
+RESPUESTA:
+{
+        "_id" : ObjectId("633dcb6f94bfaf94a12aa945"),
+        "title" : "motor",
+        "price" : 2324,
+        "thumbnail" : "https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"
+}
+
+b.3) Listar los productos con precio mayor a 3000 pesos.
+COMANDO:
+db.productos.find({"price": {$gt: 3000}}).pretty()
+
+RESPUESTA:
+{
+        "_id" : ObjectId("633dcb6f94bfaf94a12aa93e"),
+        "title" : "cadena",
+        "price" : 3425,
+        "thumbnail" : "https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"
+}
+{
+        "_id" : ObjectId("633dcb6f94bfaf94a12aa940"),
+        "title" : "martillo",
+        "price" : 4529,
+        "thumbnail" : "https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"
+}
+{
+        "_id" : ObjectId("633dcb6f94bfaf94a12aa943"),
+        "title" : "monitor",
+        "price" : 3942,
+        "thumbnail" : "https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"
+}
+{
+        "_id" : ObjectId("633dcb6f94bfaf94a12aa944"),
+        "title" : "auto",
+        "price" : 4321,
+        "thumbnail" : "https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg"
+}
+
+b.4) Realizar una consulta que traiga sólo el nombre del tercer producto más barato
+COMANDO:
+db.productos.find({},{_id:0, title: 1}).skip(2).limit(1).sort({price: 1})
+
+RESPUESTA:
+{ "title" : "silla" }
+
+c) Hacer una actualización sobre todos los productos, agregando el campo stock a todos ellos con un valor de 100.
+COMANDO:
+db.productos.updateMany({}, {$set: {"stock": 100}}, {"upsert": false})
+
+RESPUESTA:
+{ "acknowledged" : true, "matchedCount" : 11, "modifiedCount" : 11 }
+
+d) Cambiar el stock a cero de los productos con precios mayores a 4000 pesos
+COMANDO:
+db.productos.updateMany({price: {$gt: 1000}}, {$set: {"stock": 0}}, {"upsert": false})
+
+RESPUESTA:
+{ "acknowledged" : true, "matchedCount" : 5, "modifiedCount" : 5 }
+
+e) Borrar los productos con precio menor a 1000 pesos
+COMANDO:
+db.productos.deleteMany({price: {$lt: 1000}})
+
+RESPUESTA:
+{ "acknowledged" : true, "deletedCount" : 5 }
+
+6) Crear un usuario 'pepe' clave: 'asd456' que sólo pueda leer la base de datos ecommerce. Verificar que pepe no pueda cambiar la información
+
+COMANDOS:
+use admin
+db.createUser({user: "pepe", pwd: "asd456", roles: [{ role: "read", db: "ecommerce" }]})
+
+RESPUESTA:
+Successfully added user: {
+        "user" : "pepe",
+        "roles" : [
+                {
+                        "role" : "read",
+                        "db" : "ecommerce"
+                }
+        ]
+}
+
+
+
+
+
