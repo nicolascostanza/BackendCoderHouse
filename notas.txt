@@ -1,0 +1,20 @@
+*tdd ---> test driven development, desarrollo dirijido por test
+
+* para las cosas q hacemos primero tenemos q escribir los tests. Ejemplo de una vision
+  assert(division(4,2) === 2)
+  // para esto tenemos q hacer var assert = require('assert')
+  // ya esta en nodejs disponible, asique no hay q instalarlo. Solo con el require basta
+
+* existen cosas para crear mocks. Ej: mockaroo ?
+
+quede en https://coderhouse.zoom.us/rec/play/8UWUDVN_nrU3Y54shs9-iXuXRCTAfRsM_21hRD4NYkubuG41EPv7DcwR3pGd58kcaxbPZdpvpLAyJ2uk.MjuXyRPjJY3Aae6j?continueMode=true&_x_zm_rtaid=xTIZQkmATNuxDYbfKKtxnw.1665159913215.1dfa94685d68409e765778b95e479315&_x_zm_rhtaid=46
+
+min 00:38:26
+
+
+
+
+
+
+
+
