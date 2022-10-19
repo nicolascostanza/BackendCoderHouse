@@ -506,12 +506,35 @@ CLASE 20:
         3) Incluimos en el proyecto el archivo JSON descargado desde el botón 'generar nueva clave privada' de la configuración de nuestro servidor en modo admin.
         4) Generamos el archivo server.js y escribimos el código de conexión hacia la base de datos Firebase como se detalla a continuación:
 CLASE 21:
-    * TDD es una tecnica de desarrollo. En la cual primero hacemos los test y q esperamos q de y luego hacemos el programa
+    * TDD o Test-Driven Development (desarrollo dirigido por tests) es una práctica de programación que consiste en escribir primero las pruebas (generalmente unitarias), después escribir el código fuente que pase la prueba satisfactoriamente y, por último, refactorizar el código escrito. Con esta práctica se consigue entre otras cosas un código más robusto, más seguro, mantenible y una mayor rapidez en el desarrollo.
+    * Mocking es la técnica utilizada para simular objetos en memoria con la finalidad de poder ejecutar pruebas unitarias.
+    * Los Mocks son objetos preprogramados con expectativas que forman una especificación de las llamadas que se espera recibir.
+    * Los Mocks se pueden servir desde un servidor web a través de una Mock API.
+    * los mocks se utilizan tanto en back, como en front
+    * Faker.js es una librería Javascript que nos permite generar varios tipos de datos aleatorios como nombres, dirección de correo electrónico, perfil de avatar, dirección, cuenta bancaria, empresa, título del trabajo y mucho más. Faker.js se puede utilizar dentro de un proyecto Node.js para generar un mocking de datos para ser servidos desde un proyecto implementado con Express.
     * mocks data se usa para simular datos q sirven para testear los enpoints y ver las respuestas
-    * faker.js es una libreria que nos permite generar mocks
     * para obtener de la url usamos req.query
     * para obtener data del body samos req.body
     * y si en la url es un param usamos req.param
     * para q el param sea opcional le ponemos '?' al final del nombre del parametro. Ejemplo ':id?'
+CLASE 22:
+    * Es un proceso de estandarización y validación de datos que consiste en eliminar las redundancias o inconsistencias, completando datos mediante una serie de reglas que actualizan la información, protegiendo su integridad y favoreciendo la interpretación, para que así sea más fácil de consultar y más útil para quien la gestiona.
+    * como y cuando debemos normalizar ?
+        ** La normalización de datos es útil cuando un repositorio de datos es demasiado grande, contiene redundancias, tiene información profundamente anidada y/o es difícil de usar.
+        ** la normalizacion de datos debe seguir ciertas reglas:
+            *** la estructura de datos debe ser plana (no podemos tener objetos anidados)
+            *** cada entidad debe almacenarse como propiedad de objeto diferente
+            *** las relaciones con otras entidades deben crearse basadas en ids (unicos, claves primarias). No es necesario guardar todo el objeto con el id ya alcanza (en sql para esto se hacen tablas intermedias con ids de las dos tablas para tener estas relaciones y no tener informacion redundante)
+    * normalizacion de datos se basa en el modelo entidad relacional
+    * normalizacion es el proceso de estandarizar y validar datos que consiste en eliminar las redundancias y repeticion de data. Con esto hacemos q sean precisos unicos y integridad
+    * normalizr es una libreria q sirve para normalizar
+    * la normalizacion es un proceso pesado. Hay q ver en que casos es conveniente
+    * Node.js proporciona una función inspect provista en el módulo util con fines de depuración. Esta devuelve una representación de cadena de un objeto que puede ser grande, complejo y con un alto nivel de anidamiento. Ejemplo
+        Ejemplo: util.inspect(myObj,true,7,true)
+        ** El primer parámetro es el objeto a inspeccionar.
+        ** El segundo parámetro muestra todas las propiedades ocultas y no ocultas.
+        ** El tercer parámetro indica hasta qué profundidad es analizado el objeto.
+        ** El cuarto parámetro colorea la salida.
+CLASE 23:
 
 
