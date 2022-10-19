@@ -505,7 +505,13 @@ CLASE 20:
         2) Instalamos el paquete npm para trabajar con Firebase en la carpeta de nuestro proyecto: npm i firebase-admin
         3) Incluimos en el proyecto el archivo JSON descargado desde el botón 'generar nueva clave privada' de la configuración de nuestro servidor en modo admin.
         4) Generamos el archivo server.js y escribimos el código de conexión hacia la base de datos Firebase como se detalla a continuación:
-
-
+CLASE 21:
+    * TDD es una tecnica de desarrollo. En la cual primero hacemos los test y q esperamos q de y luego hacemos el programa
+    * mocks data se usa para simular datos q sirven para testear los enpoints y ver las respuestas
+    * faker.js es una libreria que nos permite generar mocks
+    * para obtener de la url usamos req.query
+    * para obtener data del body samos req.body
+    * y si en la url es un param usamos req.param
+    * para q el param sea opcional le ponemos '?' al final del nombre del parametro. Ejemplo ':id?'
 
 
