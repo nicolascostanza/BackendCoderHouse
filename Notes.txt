@@ -536,5 +536,33 @@ CLASE 22:
         ** El tercer parámetro indica hasta qué profundidad es analizado el objeto.
         ** El cuarto parámetro colorea la salida.
 CLASE 23:
+    * en la res de un endpoint podemos setear una cookie con res.cookie('clave', 'valor')
+    * npm i cookie-parser. Luego lo importamos en el archivo q queremos y despues ponemos app.use(cookieParser()). Esto antes de los endpoints
+    * podemos setear una cookie con un tiempo de expiracion. Ejemplo:
+    res.cookie(clave, valor, { maxAge: numeroDeTiempoParaQueExpireEnMilisegundos })
+    * podemos leer cookies q tenemos almacenadas. Con la propiedad req.cookies
+    * req.cookies es un objeto con todas las cookies.
+    * Para borrar una cookie ---> res.clearCookie('key')
+    * no existe un metodo q borre todas las cookies de una
+    * las cookies pueden ser cambiadas por el cliente, pero podemos darnos cuentas si las cambio
+    * singed cookie ---> al momento de crear cookies podemos darle un hash luego del valor para q si el usuario la cambia nos demos cuenta porque se va a modificar el hash (con el cookie parser). Ejemplo:
+        app.use(cookieParser('El string o tambien array secret que va a usar para hashear las cookies para detectar si el usuario la cambio'))
+        res.cookie(clave, valor, { signed: true })
+    * las signed cookies se separan de las cookies comunes. tenemos req.cookies y req.signedCookies
+    * si la signed cookies fue modificada da false
+    * session memory --> sesion q se guarda en memoria
+    * Session es un paquete de nodejs, el cual permite que una variable se accesible desde cualquier lugar del sitio. Se almacena del lado del SERVIDOR, esta es la principal diferencia con la cookie, ya q esta esta almacenada del lado del cliente
+    * para instalar session hacemos npm i express-session. Despues lo importamos y abajo ponemos:
+    import {session} from 'express-session'
+    app.use(session({secret: 'secretOElStringQueQuierasParaHashearLaKey', revase: true, saveUninitialized: true}))
+    * para acceder a las session es req.session
+    * connect.sid ---> connection session id. Esto es lo q permite darse cuenta q son ventanas distintas o navegadores distintos. Esto se hace automaticamente por detras con el paquete de express-session
+    * para eliminar datos de una variable de session se utiliza req.destroy(El Parametro q le pasamos es un callback (con el err como param))
+CLASE 24:
+
+
+
+
+
 
 
