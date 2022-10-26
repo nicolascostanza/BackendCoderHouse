@@ -580,8 +580,27 @@ CLASE 24:
     * ttl ---> Devuelve el tiempo de vida que le queda a la key, si es que tiene seteado un timeout. Permite al cliente chequear por cuánto tiempo más esa key va a ser parte del conjunto de datos. Devuelve -1 si la key no existe o no tiene un tiempo de expiración.
     * RedisLab es lo mismo que Redis, pero los datos se guardan en la nube.
     * Redis-cli es la interfaz de línea de comandos de Redis, un programa simple que permite enviar comandos a Redis y leer las respuestas enviadas por el servidor, directamente desde la terminal
-
-
+CLASE 25:
+    * autenticacion ---> autentica quien sea q es el usuario q esta entrando, ejemplo nicolas costanza. Existen diversos métodos para probar la autenticación, siendo la contraseña el más conocido y utilizado.
+    * autorizacion ---> le da los permisos al usuario q fue previamente autenticado
+    * metodos de autenticacion ---> usuario y contraseña, sin contraseña (envia un link al mail por ejemplo), por redes sociales, Datos biométricos, JWT(Este método open source permite la transmisión segura de datos entre las distintas partes. Comúnmente se utiliza para la autorización a partir de un par de claves que contiene una clave privada y una pública), OAuth 2.0(Permite que mediante una API, el usuario se autentique y acceda a los recursos del sistema que necesita.)
+    * passport ---> Passport es un middleware de autenticación de NodeJS. Cumple únicamente la función de autenticar solicitudes, por lo que delega todas las demás funciones a la aplicación. Esto mantiene el código limpio y fácil de mantener. Passport reconoce los distintos métodos de login utilizados actualmente, por lo que sus mecanismos de autenticación se empaquetan como módulos individuales. Entonces, no es necesario crear dependencias que no se vayan a utilizar. Cada uno de estos mecanismos se llaman strategies.
+    * strategies ---> Cada strategy tiene un módulo distinto de NodeJS para instalar. Las disponibles son: passport-local(usuario y contraseña), passport-openid, passport-oauth.
+    * npm install passport ; npm install passport-local. Se requiere el módulo de passport, junto con el módulo de passport-local, que nos da control para implementar manualmente el mecanismo de autenticación.
+    * Se define una nueva instancia de LocalStrategy y se la carga mediante el método passport.use( ).
+    * El primer parámetro es el nombre de la strategy (“login” en este caso) y el segundo es una instancia de la estrategia que se desea usar (LocalStrategy en este caso). LocalStrategy espera encontrar por defecto las credenciales de usuario en los parámetros nombre de usuario ‘username’ y contraseña ‘password’ (si se definen con otros nombres, no los encontrará!).
+    * Serializar y deserializar ---> Para restaurar el estado de autenticación a través de solicitudes HTTP, Passport necesita serializar usuarios y deserializarlos fuera de la sesión.
+    * Esto se hace de modo que cada solicitud subsiguiente no contenga las credenciales del usuario anterior. Se suele implementar proporcionando el ID de usuario al serializar y consultando el registro de usuario por ID de la base de datos al deserializar. Los métodos que proporciona Passport para esto son serializeUser y deserializeUser.
+    * inicializacion y rutas ---> Debemos inicializar con app.use( ) express y express-session. Además, debemos inicializar passport como se muestra en el código.
+CLASE 26:
+    * JSON Web Token es un método estándar y abierto para representar reclamaciones de forma segura entre dos partes. JWT.IO nos permite decodificar, verificar y generar JWT.Básicamente, los JWT son cadenas de datos que se pueden utilizar para autenticar e intercambiar información entre un servidor y un cliente.
+    * El flujo de funcionamiento es el siguiente:
+        1) El cliente envía credenciales al servidor.
+        2) El servidor verifica las credenciales, genera un JWT y lo envía como respuesta.
+        3) Las solicitudes posteriores del cliente tienen un JWT en los headers de la solicitud.
+        4) El servidor valida el token y, si es válido, proporciona la respuesta solicitada.
+    * Las solicitudes posteriores del cliente tienen un JWT en los headers de la solicitud. El servidor valida el token y, si es válido, proporciona la respuesta solicitada. Si no se valida el token, se niega el acceso.
+CLASE 27:
 
 
 
