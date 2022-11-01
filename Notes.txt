@@ -601,6 +601,28 @@ CLASE 26:
         4) El servidor valida el token y, si es válido, proporciona la respuesta solicitada.
     * Las solicitudes posteriores del cliente tienen un JWT en los headers de la solicitud. El servidor valida el token y, si es válido, proporciona la respuesta solicitada. Si no se valida el token, se niega el acceso.
 CLASE 27:
+    * el process.argv ---> es como el .env pero de node. Por defecto si no le pasamos nada ya tiene dos cosas. En primer lugar tiene el ejecutable de node, y el segundo es la direccion del archivo q estamos ejecutando. Del tercero en adelante son los argumentos que queremos usar. Estos se pasan en formato string. Ejemplo process.argv[2]
+    * minimist ---> libreria q permite trabajar con argumentos o variables de entorno mas facil q con process.argv. Se le puede pasar options, q es un objeto y la prop default es un objeto con claves y valores por defecto de cada variable q deseamos. En las options tenemos otro elemento q es alias: q es un objeto con claves y valores para renombrar variables
+    * yargs ---> es otra libreria como minimist
+    * las variables de entorno son variables sensibles q pueden ser usadas para violar la seguridad de la aplicacion o para elegir los modos y ejecutar ciertas porciones de codigo
+    * el process.env tiene variables por defecto de la computadora
+CLASE 28:
+    * Como ya hemos visto, el objeto process es una variable global disponible en NodeJS que nos ofrece diversas informaciones y utilidades acerca del proceso que está ejecutando un script Node. Contiene diversos métodos, eventos y propiedades que nos sirven no solo para obtener datos del proceso actual, sino también para controlarlo. Al ser un objeto global quiere decir que lo puedes usar en cualquier localización de tu código NodeJS, sin tener que hacer el correspondiente require().
+    * A veces, se necesita salir de la ejecución de un programa en Node. Esto lo podemos conseguir mediante el método exit del objeto process. Provocará que el programa acabe, incluso en el caso que haya operaciones asíncronas que no se hayan completado o que se esté escuchando eventos diversos en el programa.  El método exit puede recibir opcionalmente un código de salida. Si no indicamos nada se entiende "0" como código de salida. Ejemplo: process.exit(3)
+    * La mayor funcionalidad de process está contenida en la función ‘.on()’. Dicha función está escuchando durante todo el proceso que se ejecuta, es por eso que solo se puede actuar sobre su callback. Se define como se definen los eventos en Javascript. En el método on, indicando el tipo de evento que queremos escuchar y un callback que se ejecutará cuando ese evento se dispare. Ejemplo: process.on('event', callback)
+    * Normalmente, el proceso de Node se cerrará cuando no haya trabajo programado, pero un oyente registrado en el evento beforeExit puede realizar llamadas asincrónicas y, por lo tanto, hacer que el proceso de Node continúe. No debe usarse como una alternativa al evento de exit a menos que la intención sea programar trabajo adicional. Ejemplo: process.on('beforeExit', callback)
+    * Evento ‘uncaughtException’ ---> Se emite cuando una excepción es devuelta hacia el bucle de evento. Si se agregó un listener a esta excepción, no se producirá la acción por defecto (imprimir una traza del stack y salir). Es un mecanismo muy básico para manejar excepciones.
+    * ‘process.execPath’ ---> Esta propiedad devuelve el nombre de la ruta absoluta del ejecutable que inició el proceso Node. Los enlaces simbólicos, si los hay, se resuelven.
+    * process.stdout.write’ ---> La propiedad process.stdout devuelve una secuencia conectada a stdout. Es un stream de escritura para stdout.
+    * child process ---> Cuando ponemos en marcha un programa escrito en NodeJS se dispone de un único hilo de ejecución. Una ventaja de esto es que permite atender mayor demanda con menos recursos. Todas las operaciones que NodeJS no puede realizar al instante (operaciones no bloqueantes), liberan el proceso, es decir, se libera para atender otras solicitudes. El hilo principal podrá estar atento a solicitudes, pero una vez que se atiendan, Node podrá levantar de manera interna otros procesos para realizar todo tipo de acciones que se deban producir como respuesta a esas solicitudes. Estos procesos secundarios pueden crearse con el módulo child_process.
+    * Un proceso hijo es un proceso creado por un proceso padre. Node nos permite ejecutar un comando del sistema dentro de un proceso hijo y escuchar su entrada / salida. Los desarrolladores crean de forma habitual procesos secundarios para ejecutar comandos sobre su sistema operativo cuando necesitan manipular el resultado de sus programas Node con un shell. Podemos crear procesos hijo de 4 formas diferentes: exec(), execFile(), spawn(), fork()
+    * el exec() ejecuta un comando en consola, se le pasa como primer parametro un string con el comando a eejecturar y el segundo es un callback para manejar errores. Lo mismo el execFile
+    * La función fork() es una variación de spawn() que permite la comunicación entre el proceso principal y el secundario. Además de recuperar datos desde el proceso secundario, un proceso principal puede enviar mensajes al proceso secundario en ejecución. Del mismo modo, el proceso secundario puede enviar mensajes al proceso principal. Si un servidor web está bloqueado, no puede procesar ninguna nueva solicitud entrante hasta que el código de bloqueo haya completado su ejecución. Fork evita el bloqueo corriendo el proceso secundario bloqueante en un hilo aparte.
+
+
+
+
+
 
 
 
