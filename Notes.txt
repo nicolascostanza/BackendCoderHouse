@@ -618,11 +618,47 @@ CLASE 28:
     * Un proceso hijo es un proceso creado por un proceso padre. Node nos permite ejecutar un comando del sistema dentro de un proceso hijo y escuchar su entrada / salida. Los desarrolladores crean de forma habitual procesos secundarios para ejecutar comandos sobre su sistema operativo cuando necesitan manipular el resultado de sus programas Node con un shell. Podemos crear procesos hijo de 4 formas diferentes: exec(), execFile(), spawn(), fork()
     * el exec() ejecuta un comando en consola, se le pasa como primer parametro un string con el comando a eejecturar y el segundo es un callback para manejar errores. Lo mismo el execFile
     * La función fork() es una variación de spawn() que permite la comunicación entre el proceso principal y el secundario. Además de recuperar datos desde el proceso secundario, un proceso principal puede enviar mensajes al proceso secundario en ejecución. Del mismo modo, el proceso secundario puede enviar mensajes al proceso principal. Si un servidor web está bloqueado, no puede procesar ninguna nueva solicitud entrante hasta que el código de bloqueo haya completado su ejecución. Fork evita el bloqueo corriendo el proceso secundario bloqueante en un hilo aparte.
-
-
-
-
-
-
-
-
+CLASE 29:
+    * Cuando hablamos de Cluster nos referimos al uso de subprocesos que permite aprovechar la capacidad del procesador del servidor donde se ejecute la aplicación. Node se ejecuta en un solo proceso (single thread), y entonces no aprovechamos la máxima capacidad que nos puede brindar un procesador multicore. Al usar el cluster, lo que hacemos es, en el caso de estar ejecutando sobre un servidor multicore, hacer uso de todos los núcleos del mismo, aprovechando al máximo su capacidad.
+    * Node nos provee un módulo llamado cluster para hacer uso de esto. Lo que hace es clonar el worker maestro y delegarle la carga de trabajo a cada uno de ellos, de esa manera se evita la sobrecarga a un solo núcleo del procesador.
+    * modulo forever ---> Cuando ejecutamos un proyecto de Node en un servidor en el que lo tengamos desplegado, dejamos la consola “ocupada” con esa aplicación. Si queremos seguir haciendo cosas o arrancar otro proyecto no podemos, ya que tendríamos que detener la aplicación pulsando Ctrl+C quedando la consola libre nuevamente. Por otro lado, si el servidor se parara por un fallo, nuestra aplicación no se arrancaría de nuevo. Ambos problemas se pueden resolver con el módulo Forever de Node.
+    * la ventaja de Forever es que puede utilizarse en produccion. En cambio nodemon no
+    * comandos de forever en la terminal:
+        forever start <filename> [args]: inicia un nuevo proceso
+        forever list: lista todos los procesos activos
+        forever stop <PID>: detiene un proceso según su id de proceso
+        forever stopall: detiene todos los procesos activos
+        forever --help: muestra la ayuda completa
+    * modulo PM2 ---> Es un gestor de procesos (Process Manager), es decir, un programa que controla la ejecución de otro proceso. Permite chequear si el proceso se está ejecutando, reiniciar el servidor si este se detiene por alguna razón, gestionar los logs, etc. Lo más importante es que PM2 simplifica las aplicaciones de Node para ejecutarlas como cluster. Es decir, que podemos escribir nuestra aplicación sin pensar en el cluster, y luego PM2 se encarga de crear un número dado de worker processes para ejecutar la aplicación. Es capaz de aguantar cantidades enormes de tráfico con un consumo de recursos realmente reducido y con herramientas que permiten realizar la monitorización de las aplicaciones de manera remota. La ventaja principal sobre el módulo forever es el tema del cluster embebido en este módulo, como mencionamos antes.
+CLASE 30:
+    * Proxy ---> Es un servidor que hace de intermediario entre las conexiones de un cliente y un servidor de destino, filtrando todos los paquetes entre ambos. Sin el proxy, la conexión entre cliente y servidor de origen a través de la web es directa. Se utiliza para navegar por internet de forma más anónima ya que oculta las IP, sea del cliente o del servidor de origen. Por ser intermediario, ofrece funcionalidades como control de acceso, registro del tráfico, mejora de rendimiento, entre otras.
+    * existen 2 tipos de proxy ---> FORWARD PROXY y REVERSE PROXY
+    * Proxy directo (forward) ---> Es el q usamos normalmente los clientes, para acceder por ejemplo a netflix de otro lado para ver otras pelis. Es un servidor proxy que se coloca entre el cliente y la web. Recibe la petición del cliente para acceder a un sitio web, y la transmite al servidor del sitio, para que este no se entere de qué cliente está haciendo la petición. Lo utiliza un cliente cuando quiere anonimizar su IP. Es útil para mejorar la privacidad, y para evitar restricciones de contenido geográfico (contenido bloqueado en cierta región).
+    * Proxy inverso (reverse) ---> Sirve para hacer una mejor seguridad del servidor, que no se tengan que conectar los clientes directamente al servidor. Es este caso, el servidor proxy se coloca entre la web y el servidor de origen. Entonces, el que se mantiene en el anonimato es el servidor de origen. Garantiza que ningún cliente se conecte directo con él y por ende mejore su seguridad. En general el cifrado SSL de un sitio web seguro se crea en el proxy (y no directamente en el servidor). Además, es útil para distribuir la carga entre varios servidores web.
+    * Es conveniente en el backend usar un proxy inverso. Tiene varias ventajas:
+        ** Balancear la carga: Un solo servidor de origen, en una página con millones de visitantes diarios, no puede manejar todo el tráfico entrante. El proxy inverso puede recibir el tráfico entrante antes de que llegue al servidor de origen. Si este está sobrecargado o cae completamente, puede distribuir el tráfico a otros servidores sin afectar la funcionalidad del sitio. Es el principal uso de los servidores proxy inverso.
+        ** Seguridad mejorada: Al ocultar el proxy inverso la IP del servidor de origen de un sitio web, se puede mantener el anonimato del mismo, aumentando considerablemente su seguridad. Al tener al proxy como intermediario, cualquier atacante que llegue va a tener una traba más para llegar al servidor de origen
+        ** Potente caching: Podemos utilizar un proxy inverso para propósitos de aceleración de la web, almacenando en caché tanto el contenido estático como el dinámico. Esto puede reducir la carga en el servidor de origen, resultando en un sitio web más rápido.
+        ** Compresión superior: Un proxy inverso es ideal para comprimir las respuestas del servidor. Esto se utiliza mucho ya que las respuestas del servidor ocupan mucho ancho de banda, por lo que es una buena práctica comprimirlas antes de enviarlas al cliente.
+        ** Cifrado SSL optimizado: Cifrar y descifrar las solicitudes SSL/TLS para cada cliente puede ser muy difícil para el servidor de origen. Un proxy inverso puede hacer esta tarea para liberar los recursos del servidor de origen para otras tareas importantes, como servir contenido.
+        ** Monitoreo y registro del tráfico: Un proxy inverso captura cualquier petición que pase por él. Por lo tanto, podemos usarlos como un centro de control para monitorear y registrar el tráfico. Incluso si utilizamos varios servidores web para alojar todos los componentes de nuestro sitio web, el uso de un proxy inverso facilitará la supervisión de todos los datos entrantes y salientes del sitio.
+    * NGINX ---> Nginx es un servidor web, orientado a eventos (como Node) que actúa como un proxy lo que nos permite redireccionar el tráfico entrante en función del dominio de dónde vienen, hacia el proceso y puerto que nos interese. Se usa para solucionar el problema que se genera al correr nuestra app Node en el puerto 80, para que sea accesible desde una IP o dominio, y queremos utilizar el mismo puerto con otro proceso.
+    * deberia aprender como hacer un proxy inverso con nginx
+CLASE 31:
+    * Una de las cosas que podemos hacer en el código para mejorar el rendimiento de una aplicación Express al desplegarla en producción es utilizar la compresión de gzip.
+    * Su uso puede disminuir significativamente el tamaño del cuerpo de respuesta y, por lo tanto, aumentar la velocidad de una aplicación web. Utilizamos gzip, un middleware de compresión de Node para la compresión en aplicaciones Express.
+    * No resulta la mejor opción para una aplicación con tráfico elevado en producción.
+    * Que podemos hacer para optimizar nuestra aplicacion:
+        ** Utilizar la compresión de gzip
+        ** No utilizar funciones síncronas
+        ** Realizar un registro correcto
+        ** Manejar las excepciones correctamente
+    * Cosas para hacer en el entorno o configuracion
+        ** Establecer NODE_ENV en producción
+        ** Que la App se reinicie automáticamente
+        ** Ejecutar la App en un Cluster
+        ** Almacenar en caché los resultados de la solicitud
+        ** Utilizar el balanceador de carga
+        ** Utilizar un proxy inverso
+    * Un log o historial de log refiere al registro secuencial de cada uno de los eventos que afectan un proceso particular constituyendo una evidencia del comportamiento del sistema.
+    * Existen para esto libreria como log4js, pino, winston
